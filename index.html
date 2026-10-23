@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>CAD Web — Linhas de Plantio</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -273,6 +273,33 @@
   .sp-dlg .qf{display:flex;gap:6px;justify-content:flex-end;padding:8px 10px;border-top:1px solid var(--line)}
   .sp-dlg button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:3px;padding:4px 10px;cursor:pointer;font-size:11px}
   .sp-dlg button.ok{background:var(--accent2);border-color:var(--accent2);color:#fff}
+
+  .sp-pick{font-size:10.5px;color:#cfe3f3;background:#1d2a33;border:1px dashed #3b6b8a;border-radius:4px;padding:6px 8px;line-height:1.45}
+  .sp-pick a{color:var(--sel);cursor:pointer;text-decoration:underline}
+  /* ===== modo Mobile (toque) ===== */
+  #cv{touch-action:none}
+  body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  #mbBar{display:none}
+  body.mobile #mbBar{display:flex;position:absolute;left:50%;transform:translateX(-50%);bottom:64px;gap:4px;z-index:65;background:rgba(30,33,36,.94);border:1px solid var(--line);border-radius:12px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.5);max-width:calc(100% - 12px);overflow-x:auto}
+  #mbBar button{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px;padding:5px 6px;background:transparent;border:1px solid transparent;border-radius:9px;color:#e3e8ed;font-size:9.5px}
+  #mbBar button b{font-size:17px;line-height:1.1;font-weight:600}
+  #mbBar button:active,#mbBar button.on{background:#0e639c;border-color:var(--sel)}
+  #mbBar #mbOk b{color:#37d67a} #mbBar #mbEsc b{color:#ff6b6b}
+  body.mobile #cmdbar{height:54px} body.mobile #cmdlog{font-size:10.5px} body.mobile #cmd{font-size:16px}
+  body.mobile #status{overflow-x:auto;gap:10px;font-size:10.5px} body.mobile #status .tg{padding:3px 8px}
+  body.mobile #ztools{bottom:130px} body.mobile #ztools button{width:38px;height:38px;font-size:18px} body.mobile #scalebar{bottom:130px;left:56px}
+  body.mobile .rb.lg{width:66px;min-height:62px} body.mobile .rb.sm{height:30px;font-size:12px} body.mobile .rt{padding:8px 12px;font-size:12.5px}
+  body.mobile .rb-top{height:38px} body.mobile #ribbon.min .rb-body{top:38px} body.mobile .qa{min-width:34px;height:32px}
+  body.mobile .rb-brand,body.mobile .rb-qat .qa[data-cmd]{display:none}
+  body.mobile #props-panel{transform:scale(.92);transform-origin:top left;max-width:calc(100vw - 20px)}
+  body.mobile #qsDlg,body.mobile .sp-dlg,body.mobile .os-set{width:auto;left:6px!important;right:6px!important;transform:none;top:6px;max-height:calc(100% - 140px);overflow:auto}
+  body.mobile .os-menu{max-height:calc(100vh - 20px);overflow:auto;font-size:13px} body.mobile .os-it{padding:8px 10px}
+  body.mobile .os-subm{position:static;display:block;border:0;box-shadow:none;padding-left:18px;background:transparent}
+  body.mobile #cftLegend{transform:scale(.85);transform-origin:bottom right;bottom:120px}
+  body.mobile #modal .box{width:calc(100vw - 24px)!important;max-height:calc(100vh - 30px);overflow:auto}
+  body.mobile .aci-pop{width:calc(100vw - 16px);left:8px!important} body.mobile .aci-grid{grid-template-columns:repeat(24,1fr)}
+  body.mobile .aci-pop i{height:15px} body.mobile .aci-std{grid-template-columns:repeat(9,1fr)}
+  #mbModeBtn span{font-size:10.5px}
 </style>
 </head>
 <body>
@@ -822,6 +849,7 @@ function render(){
 
     if(typeof osDrawExtras==='function') osDrawExtras();
     if(typeof edDrawOverlay==='function') edDrawOverlay();
+    if(typeof spDrawPreview==='function') spDrawPreview();
     if(curSnap){ if(typeof osDrawMarker==='function') osDrawMarker(curSnap); }
 
     if(cfg.crosshair){
@@ -836,6 +864,7 @@ function render(){
     }
 
     if(S.dyn) drawDynamicInputHUD();
+    if(typeof mbDrawLoupe==='function') mbDrawLoupe();
 
     updateScaleBar();
   }
@@ -914,7 +943,7 @@ function commit(e){pushState();e.id=newId();if(e.layer==null)e.layer=activeLayer
 function startTool(cmd){
   tool.reset();
   document.querySelectorAll(`#ribbon .rb[data-cmd="${cmd}"]`).forEach(b=>b.classList.add('active'));
-  const input=document.getElementById('cmd'); input.focus();
+  const input=document.getElementById('cmd'); if(typeof mbCanFocus!=='function' || mbCanFocus()) input.focus();
 
   switch(cmd){
     case 'LINE': tool.name='line'; setPrompt('LINE · 1º ponto:'); log('> LINE (Linha)','p'); break;
@@ -1653,7 +1682,7 @@ function pick(p){
   for(const e of ents){
     if(e.hidden) continue;
     const L=LB(e.layer); if(L && !L.on) continue;
-    if(e.pts) for(let i=0;i<e.pts.length-1;i++) if(distSeg(p, e.pts[i], e.pts[i+1]).d < 12/S.scale) return e;
+    if(e.pts) for(let i=0;i<e.pts.length-1;i++) if(distSeg(p, e.pts[i], e.pts[i+1]).d < (document.body.classList.contains('mobile')?24:12)/S.scale) return e;
   }
   return null;
 }
@@ -5022,7 +5051,7 @@ window.addEventListener('keydown',ev=>{
     ev.stopPropagation(); const a=b.dataset.act, r=b.getBoundingClientRect();
     if(a==='OSMENU' && typeof osMenu==='function') osMenu(r.left, r.bottom+2);
     if(a==='OSSET' && typeof osSettings==='function') osSettings();
-    afterCmd(); const c=document.getElementById('cmd'); if(c) c.focus();
+    afterCmd(); const c=document.getElementById('cmd'); if(c && (typeof mbCanFocus!=='function' || mbCanFocus())) c.focus();
   }));
 
   /* fundo do mapa: o painel antigo vira um menu suspenso */
@@ -5362,7 +5391,7 @@ function getSnap(px, py){
   if(osOv==='none') return null;
   const modes = osOv ? new Set([osOv]) : (S.snap ? osRun : new Set());
   if(!modes.size && !osTrack) return null;
-  const tol=14, tw=tol/S.scale, wx=s2wx(px), wy=s2wy(py);
+  const tol=document.body.classList.contains('mobile')?26:14, tw=tol/S.scale, wx=s2wx(px), wy=s2wy(py);
   let best=null, bs=Infinity;
   const cand=(x,y,k,extra)=>{ const d=Math.hypot(w2sx(x)-px, w2sy(y)-py); if(d>tol) return; const s=d+(OS_DEF[k]?OS_DEF[k].rank||0:1)*7; if(s<bs){ bs=s; best=Object.assign({x,y,kind:k},extra||{}); } };
   const vx0=s2wx(0), vx1=s2wx(W), vy0=s2wy(H), vy1=s2wy(0);
@@ -6072,11 +6101,11 @@ function _spDev(orig,simp){ // desvio máximo real (amostra) original -> nova
 }
 const SP={mode:'rpq', scope:'sel', layer:'*', tol:0.02, mn:1.5, mx:8};
 try{ const v=JSON.parse(localStorage.getItem('cad_simp')||'null'); if(v){ SP.tol=v.tol??SP.tol; SP.mn=v.mn??SP.mn; SP.mx=v.mx??SP.mx; } }catch(_){}
-let _spSel=null, _spT=null;
+let _spSel=null, _spT=null, _spPrev=null;   // _spPrev: Map ent -> pts resultado (prévia no desenho)
 function _spTargets(){
   return ents.filter(e=>{
     if(!e.pts||e.pts.length<2||!(e.type==='pline'||e.type==='line'||e.type==='spline')) return false;
-    if(SP.scope==='sel') return _spSel.has(e.id);
+    if(SP.scope==='sel') return selection.has(e.id);
     if(e.hidden) return false; const L=LB(e.layer); if(L && !L.on) return false;
     if(SP.scope==='layer') return String(e.layer)===SP.layer;
     return true;
@@ -6084,7 +6113,7 @@ function _spTargets(){
 }
 function spOpen(mode){
   SP.mode=mode; _spSel=new Set(selection);
-  SP.scope=_spSel.size?'sel':'all';
+  SP.scope='sel';
   let d=document.getElementById('spDlg'); if(d) d.remove();
   d=document.createElement('div'); d.id='spDlg'; d.className='sp-dlg';
   const isR=mode==='rpq';
@@ -6093,8 +6122,9 @@ function spOpen(mode){
      <span>${isR?'Reduzir pontos sem perda de qualidade':'HME · Padronizar espaçamento de vértices'}</span><i id="spX">✕</i></div>
    <div class="qb">
      <div class="qr"><label>Objetos:</label><select id="spScope">
-        ${_spSel.size?`<option value="sel">Seleção atual (${_spSel.size})</option>`:''}
+        <option value="sel" id="spSelOpt">Linhas selecionadas (${selection.size})</option>
         <option value="layer">Uma camada…</option><option value="all">Todas as linhas visíveis</option></select></div>
+ <div class="sp-pick" id="spPick">👆 Clique nas linhas ou arraste uma janela no desenho para escolher (Shift — ou o botão “Janela” no celular — soma/tira). <a id="spClr">limpar</a> · <a id="spAllV">todas visíveis</a></div>
      <div class="qr" id="spLayRow" style="display:none"><label>Camada:</label><select id="spLayer">${layers.filter(l=>lc[l.id]).map(l=>`<option value="${l.id}">${l.name} (${lc[l.id]})</option>`).join('')}</select></div>
      ${isR?`<div class="qr"><label>Maior desvio aceitável (m):</label><input type="number" id="spTol" step="0.005" min="0.001" value="${SP.tol}"></div>
        <div class="sp-hint">Mantém só vértices da linha original — nenhum ponto da linha original fica mais longe que esse valor da linha nova. 0,02 m = 2 cm.</div>`
@@ -6107,26 +6137,33 @@ function spOpen(mode){
   document.getElementById('stage').appendChild(d);
   const $=id=>d.querySelector('#'+id);
   $('spScope').value=SP.scope;
-  const sync=()=>{ $('spLayRow').style.display=SP.scope==='layer'?'grid':'none'; if(SP.scope==='layer'){ if(![...$('spLayer').options].some(o=>o.value===SP.layer)) SP.layer=$('spLayer').value; $('spLayer').value=SP.layer; } clearTimeout(_spT); _spT=setTimeout(spPreview,120); };
+  const sync=()=>{ $('spLayRow').style.display=SP.scope==='layer'?'grid':'none'; $('spPick').style.display=SP.scope==='sel'?'block':'none'; if(SP.scope==='layer'){ if(![...$('spLayer').options].some(o=>o.value===SP.layer)) SP.layer=$('spLayer').value; $('spLayer').value=SP.layer; } clearTimeout(_spT); _spT=setTimeout(spPreview,120); };
   $('spScope').onchange=e=>{ SP.scope=e.target.value; sync(); };
   $('spLayer').onchange=e=>{ SP.layer=e.target.value; sync(); };
   if(isR) $('spTol').oninput=e=>{ SP.tol=parseFloat(e.target.value)||0; sync(); };
   else { $('spMn').oninput=e=>{ SP.mn=parseFloat(e.target.value)||0; sync(); }; $('spMx').oninput=e=>{ SP.mx=parseFloat(e.target.value)||0; sync(); }; }
-  $('spX').onclick=$('spC').onclick=()=>d.remove();
-  $('spOk').onclick=()=>{ spApply(); d.remove(); };
-  d.addEventListener('keydown',ev=>{ ev.stopPropagation(); if(ev.key==='Enter'){ ev.preventDefault(); spApply(); d.remove(); } if(ev.key==='Escape') d.remove(); });
+  const close=()=>{ d.remove(); _spPrev=null; S.dirty=true; };
+  $('spX').onclick=$('spC').onclick=close;
+  $('spOk').onclick=()=>{ spApply(); close(); };
+  $('spClr').onclick=()=>{ selection.clear(); updateProps(); S.dirty=true; };
+  $('spAllV').onclick=()=>{ ents.forEach(e=>{ if(e.pts&&e.pts.length>1&&!e.hidden&&(e.type==='pline'||e.type==='line'||e.type==='spline')){ const L=LB(e.layer); if(!L||L.on) selection.add(e.id); } }); updateProps(); S.dirty=true; };
+  d.addEventListener('keydown',ev=>{ ev.stopPropagation(); if(ev.key==='Enter'){ ev.preventDefault(); spApply(); close(); } if(ev.key==='Escape') close(); });
   sync();
-  setTimeout(()=>{ const f=$(isR?'spTol':'spMn'); f.focus(); f.select(); },30);
+  if(typeof mbCanFocus!=='function' || mbCanFocus()) setTimeout(()=>{ const f=$(isR?'spTol':'spMn'); f.focus(); f.select(); },30);
   log(isR?'> Reduzir pontos sem perda de qualidade (Douglas-Peucker)':'> HME · espaçamento mínimo / máximo','p');
 }
 function _spRun(e){ return SP.mode==='rpq' ? dpSimplifyEnt(e,SP.tol) : hmeMinMax(e.pts,SP.mn,SP.mx,!!e.closed); }
 function spPreview(){
   const el=document.getElementById('spRes'); if(!el) return;
-  const T=_spTargets(); if(!T.length){ el.textContent='Nenhuma linha no escopo escolhido.'; return; }
+  const o=document.getElementById('spSelOpt'); if(o) o.textContent=`Linhas selecionadas (${selection.size})`;
+  _spPrev=null; S.dirty=true;
+  const T=_spTargets(); if(!T.length){ el.textContent= SP.scope==='sel' ? 'Nenhuma linha selecionada ainda — clique ou arraste no desenho.' : 'Nenhuma linha no escopo escolhido.'; return; }
   if(SP.mode==='rpq' && !(SP.tol>0)){ el.textContent='Informe um desvio maior que zero.'; return; }
   if(SP.mode==='hme' && !(SP.mx>0)){ el.textContent='Informe o espaçamento máximo.'; return; }
   let a=0,b=0,dev=0; const t0=performance.now();
-  for(const e of T){ const r=_spRun(e); a+=e.pts.length; b+=r.length; if(SP.mode==='rpq' && performance.now()-t0<300) dev=Math.max(dev,_spDev(e.pts,r)); }
+  const pv=new Map();
+  for(const e of T){ const r=_spRun(e); a+=e.pts.length; b+=r.length; if(b<60000) pv.set(e,r); if(SP.mode==='rpq' && performance.now()-t0<300) dev=Math.max(dev,_spDev(e.pts,r)); }
+  _spPrev = b<60000 ? pv : null;
   const pc=a?((b-a)/a*100):0, f=n=>n.toLocaleString('pt-BR');
   el.innerHTML=`${T.length} linha(s) · vértices <b>${f(a)}</b> → <b>${f(b)}</b> <span style="color:${pc<0?'#37d67a':'#ffd23f'}">(${pc>0?'+':''}${pc.toFixed(1)}%)</span>`+
     (SP.mode==='rpq'?`<br><small>desvio máximo medido: ${dev.toFixed(3)} m · tamanho estimado ${(b*24/1024).toFixed(0)} KB (antes ${(a*24/1024).toFixed(0)} KB)</small>`:'');
@@ -6142,6 +6179,171 @@ function spApply(){
   log(SP.mode==='rpq' ? `Reduzir pontos: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (desvio ≤ ${SP.tol} m).`
                       : `HME: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (mín ${SP.mn} m · máx ${SP.mx} m).`,'g');
 }
+
+/* prévia no desenho: vértices que vão ficar (verde) */
+function spDrawPreview(){
+  if(!_spPrev || !document.getElementById('spDlg')) return;
+  ctx.save(); ctx.fillStyle='#37d67a'; ctx.strokeStyle='rgba(55,214,122,.9)'; ctx.lineWidth=1.2;
+  const r=S.scale>1.5?2.6:1.6, vx0=-10, vx1=W+10, vy0=-10, vy1=H+10;
+  for(const [e,pts] of _spPrev){
+    ctx.beginPath(); let started=false;
+    for(const q of pts){ const x=w2sx(q[0]), y=w2sy(q[1]); if(!started){ ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y); }
+    if(e.closed) ctx.closePath(); ctx.stroke();
+    for(const q of pts){ const x=w2sx(q[0]), y=w2sy(q[1]); if(x<vx0||x>vx1||y<vy0||y>vy1) continue; ctx.fillRect(x-r,y-r,2*r,2*r); }
+  }
+  ctx.restore();
+}
+/* a lista acompanha a seleção feita no desenho com a janela aberta */
+(function(){ const _up=updateProps; updateProps=function(){ const r=_up.apply(this,arguments); if(document.getElementById('spDlg')){ clearTimeout(_spT); _spT=setTimeout(spPreview,120); } return r; }; })();
+
+</script>
+<script>
+/* ===================== MODO CELULAR / TOQUE  (alternar Web ↔ Mobile) ===================== */
+const MB={ mode:'auto', win:false, loupe:null };
+try{ MB.mode=localStorage.getItem('cad_ui_mode')||'auto'; }catch(_){}
+/* em celular/tablet (Android, iPhone) ou no modo Mobile não abre o teclado sozinho — com mouse OTG o teclado virtual tapava a tela */
+const MB_TOUCH_OS=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+function mbCanFocus(){ return !mbIsMobile() && !MB_TOUCH_OS; }
+/* teclado físico (bluetooth/OTG): digitar em qualquer lugar vai para a linha de comando */
+window.addEventListener('keydown',ev=>{
+  if(mbCanFocus()) return; const a=document.activeElement;
+  if(a && (a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT'||a.isContentEditable)) return;
+  if(ev.ctrlKey||ev.metaKey||ev.altKey) return;
+  if(ev.key.length===1 || ev.key==='Backspace'){ const c=document.getElementById('cmd'); if(c){ c.focus(); } }
+},true);
+function mbIsMobile(){ return document.body.classList.contains('mobile'); }
+function mbApplyMode(){
+  const coarse=window.matchMedia && matchMedia('(pointer:coarse)').matches;
+  const on = MB.mode==='mobile' || (MB.mode==='auto' && (coarse || innerWidth<700));
+  document.body.classList.toggle('mobile',on);
+  const b=document.getElementById('mbModeBtn'); if(b) b.innerHTML = on ? '📱 <span>Mobile</span>' : '🖥 <span>Web</span>';
+  if(on){ document.body.classList.add('nolayers'); const R=document.getElementById('ribbon'); if(R && !R.classList.contains('min') && !MB._minDone){ document.getElementById('rbMin').click(); MB._minDone=true; } }
+  if(typeof resize==='function') setTimeout(resize,30);
+}
+function mbToggleMode(){
+  MB.mode = mbIsMobile() ? 'web' : 'mobile';
+  try{ localStorage.setItem('cad_ui_mode',MB.mode); }catch(_){}
+  if(MB.mode==='web'){ document.body.classList.remove('nolayers'); }
+  mbApplyMode(); log('Interface: '+(mbIsMobile()?'MOBILE (toque)':'WEB (mouse/teclado)'),'p');
+}
+/* botão no topo */
+(function(){
+  const right=document.querySelector('#ribbon .rb-right'); if(!right) return;
+  const b=document.createElement('div'); b.className='qa wide'; b.id='mbModeBtn'; b.title='Alternar interface Web (mouse) / Mobile (toque)';
+  b.onclick=mbToggleMode; right.insertBefore(b,right.firstChild);
+})();
+
+/* barra de ações de toque (substitui Enter / Esc / botão direito do teclado e mouse) */
+(function(){
+  const bar=document.createElement('div'); bar.id='mbBar';
+  const B=(id,ic,lab,tit)=>`<button id="${id}" title="${tit||lab}"><b>${ic}</b><span>${lab}</span></button>`;
+  bar.innerHTML=B('mbOk','✓','Concluir','Enter / botão direito')+B('mbEsc','✕','Cancelar','Esc')+B('mbUndo','↶','Desfazer')+
+    B('mbSnap','🧲','Snap','Menu de snap')+B('mbWin','▭','Janela','Arrastar um dedo faz janela de seleção')+B('mbZe','⊡','Enquadrar')+B('mbKey','⌨','Digitar','Abrir o teclado na linha de comando');
+  document.getElementById('stage').appendChild(bar);
+  const cmd=()=>document.getElementById('cmd');
+  const key=(k)=>{ const t=cmd(); const ev=new KeyboardEvent('keydown',{key:k,code:k==='Enter'?'Enter':k,bubbles:true,cancelable:true}); t.dispatchEvent(ev); };
+  document.getElementById('mbOk').onclick=()=>{
+    // mesmo efeito do Enter na linha de comando (conclui polyline, TRIM, MBR, sessão CFT...)
+    if(typeof cftSession!=='undefined' && cftSession){ cftApplySession(); return; }
+    key('Enter'); S.dirty=true; };
+  document.getElementById('mbEsc').onclick=()=>{ window.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); };
+  document.getElementById('mbUndo').onclick=()=>undo();
+  document.getElementById('mbSnap').onclick=ev=>{ const r=ev.currentTarget.getBoundingClientRect(); osMenu(r.left, r.top-10); };
+  document.getElementById('mbWin').onclick=ev=>{ MB.win=!MB.win; ev.currentTarget.classList.toggle('on',MB.win); log(MB.win?'Arrastar = janela de seleção (dois dedos movem o mapa)':'Arrastar = mover o mapa','p'); };
+  document.getElementById('mbZe').onclick=()=>zoomExtents();
+  document.getElementById('mbKey').onclick=()=>{ const c=cmd(); c.focus(); };
+})();
+
+/* ---------- gestos no desenho ---------- */
+(function(){
+  const cvEl=cv;
+  const fire=(type,x,y,button,extra)=>{
+    const o=Object.assign({clientX:x,clientY:y,button:button||0,buttons:type==='mouseup'?0:1,bubbles:true,cancelable:true},extra||{});
+    const ev=new MouseEvent(type,o);
+    (type==='mousedown'?cvEl:window).dispatchEvent(ev);
+  };
+  let T=null;   // estado do gesto
+  const pointing=()=>tool && tool.name!=='select';
+  const LONG=480, MOVE=9;
+  cvEl.addEventListener('touchstart',ev=>{
+    ev.preventDefault();
+    const ts=ev.touches;
+    if(ts.length>=2){ // pinça: zoom + pan
+      if(T && T.timer) clearTimeout(T.timer);
+      if(T && T.box){ const t=T; fire('mouseup',t.lx,t.ly,0); }
+      const a=ts[0], b=ts[1], r=cvEl.getBoundingClientRect();
+      const mx=(a.clientX+b.clientX)/2-r.left, my=(a.clientY+b.clientY)/2-r.top;
+      T={kind:'pinch', d0:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)||1, sc0:S.scale, wa:[s2wx(mx),s2wy(my)]};
+      MB.loupe=null; return;
+    }
+    const t=ts[0];
+    T={kind:'one', x0:t.clientX, y0:t.clientY, lx:t.clientX, ly:t.clientY, t0:Date.now(), moved:false, box:false, long:false};
+    fire('mousemove',t.clientX,t.clientY);
+    if(pointing()){ MB.loupe={x:t.clientX,y:t.clientY}; S.ovDirty=true; }
+    else {
+      T.timer=setTimeout(()=>{ if(T && T.kind==='one' && !T.moved){ T.long=true; if(navigator.vibrate) try{navigator.vibrate(15);}catch(_){}
+        log('Arraste para fazer janela de seleção, ou solte para o menu.','p'); } },LONG);
+    }
+  },{passive:false});
+  cvEl.addEventListener('touchmove',ev=>{
+    ev.preventDefault(); if(!T) return;
+    const ts=ev.touches;
+    if(T.kind==='pinch' && ts.length>=2){
+      const a=ts[0], b=ts[1], r=cvEl.getBoundingClientRect();
+      const mx=(a.clientX+b.clientX)/2-r.left, my=(a.clientY+b.clientY)/2-r.top;
+      const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)||1;
+      S.scale=Math.max(1e-4,Math.min(500,T.sc0*d/T.d0));
+      S.cx=T.wa[0]-(mx-W/2)/S.scale; S.cy=T.wa[1]+(my-H/2)/S.scale;
+      S.ovDirty=true; if(typeof _scheduleFull==='function') _scheduleFull(160); else S.dirty=true;
+      return;
+    }
+    if(T.kind!=='one') return;
+    const t=ts[0], dx=t.clientX-T.lx, dy=t.clientY-T.ly;
+    if(!T.moved && Math.hypot(t.clientX-T.x0,t.clientY-T.y0)>MOVE){ T.moved=true; if(T.timer) clearTimeout(T.timer);
+      if(!pointing() && (MB.win || T.long)){ T.box=true; fire('mousedown',T.x0,T.y0,0); } }
+    if(pointing()){ fire('mousemove',t.clientX,t.clientY); MB.loupe={x:t.clientX,y:t.clientY}; }
+    else if(T.box){ fire('mousemove',t.clientX,t.clientY); }
+    else if(T.moved){ // pan com um dedo
+      S.cx-=dx/S.scale; S.cy+=dy/S.scale; fire('mousemove',t.clientX,t.clientY);
+      S.ovDirty=true; if(typeof _scheduleFull==='function') _scheduleFull(140); else S.dirty=true;
+    }
+    T.lx=t.clientX; T.ly=t.clientY;
+  },{passive:false});
+  cvEl.addEventListener('touchend',ev=>{
+    ev.preventDefault(); if(!T) return;
+    if(T.kind==='pinch'){ if(ev.touches.length===0){ T=null; S.dirty=true; } return; }
+    if(T.timer) clearTimeout(T.timer);
+    const t=T; T=null; MB.loupe=null;
+    if(pointing()){ // solta = marca o ponto onde a mira está (com snap)
+      fire('mousemove',t.lx,t.ly); fire('mousedown',t.lx,t.ly,0); fire('mouseup',t.lx,t.ly,0); S.dirty=true; return; }
+    if(t.box){ fire('mouseup',t.lx,t.ly,0); return; }
+    if(t.long && !t.moved){ fire('mousedown',t.x0,t.y0,2); return; }       // segurar = botão direito
+    if(!t.moved){ fire('mousedown',t.x0,t.y0,0,{shiftKey:MB.win}); fire('mouseup',t.x0,t.y0,0); }   // toque = clique
+    else S.dirty=true;
+  },{passive:false});
+  cvEl.addEventListener('touchcancel',()=>{ if(T&&T.timer) clearTimeout(T.timer); T=null; MB.loupe=null; S.dirty=true; });
+})();
+
+/* lupa: mostra ampliado o que está sob o dedo enquanto mira um ponto */
+function mbDrawLoupe(){
+  if(!MB.loupe) return;
+  const r=cv.getBoundingClientRect(), x=MB.loupe.x-r.left, y=MB.loupe.y-r.top;
+  const R=58, Z=2.2, src=R/Z, lx=Math.min(W-R-6,Math.max(R+6,x)), ly=y-R-46<R+4 ? y+R+46 : y-R-46;
+  ctx.save();
+  ctx.beginPath(); ctx.arc(lx,ly,R,0,Math.PI*2); ctx.closePath();
+  ctx.fillStyle='#141618'; ctx.fill(); ctx.clip();
+  try{ ctx.drawImage(cv, x-src, y-src, src*2, src*2, lx-R, ly-R, R*2, R*2); }catch(_){}
+  ctx.restore();
+  ctx.save(); ctx.strokeStyle='#00e0ff'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(lx,ly,R,0,Math.PI*2); ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(lx-10,ly); ctx.lineTo(lx+10,ly); ctx.moveTo(lx,ly-10); ctx.lineTo(lx,ly+10); ctx.stroke();
+  if(curSnap){ ctx.fillStyle='#ffd23f'; ctx.font='bold 11px Segoe UI,sans-serif'; ctx.textAlign='center';
+    const nm=(OS_DEF[curSnap.kind]&&OS_DEF[curSnap.kind].n)||''; ctx.fillText(nm,lx,ly+R-10); }
+  ctx.restore();
+}
+/* no Mobile, Enquadrar deixa espaço para a barra de botões de baixo */
+(function(){ const _ze=zoomExtents; zoomExtents=function(){ const r=_ze.apply(this,arguments); if(mbIsMobile() && H>300){ const pad=120; S.scale*=(H-pad)/H; S.cy-=(pad/2)/S.scale; S.dirty=true; } return r; }; })();
+window.addEventListener('resize',()=>{ if(MB.mode==='auto') mbApplyMode(); });
+mbApplyMode();
 
 </script>
 </body>
