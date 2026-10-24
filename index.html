@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>CAD Web — Linhas de Plantio</title>
+<title>Linhas Pro</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 /* ==== GeoTIFF.js embutido (offline) ==== */
@@ -112,7 +112,7 @@
   #modal .ok{background:var(--accent2);color:#fff} #modal .ok:hover{background:var(--accent)}
   #modal .cancel{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
 
-  /* ===== CFT / monitores ===== */
+  /* ===== classificação / monitores ===== */
   #cftBar{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:none;gap:8px;align-items:center;background:rgba(38,42,46,.96);border:1px solid var(--sel);border-radius:6px;padding:6px 10px;z-index:60;font-size:11px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
   #cftBar .lbl{display:flex;align-items:center;gap:6px;color:#fff;font-weight:700}
   #cftBar .lbl i{width:12px;height:12px;border-radius:2px;display:inline-block}
@@ -324,15 +324,15 @@
 <div id="app">
 <div id="ribbon">
   <div class="rb-top">
-    <div class="rb-brand"><b>CAD Web</b><span>Linhas de Plantio · CFT / Monitores</span></div>
+    <div class="rb-brand"><b>Linhas Pro</b><span>Linhas de plantio · Monitores</span></div>
     <div class="rb-qat"><div class="qa" data-cmd="LOAD" title="Abrir projeto (.json)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 6h6l2 2h10v12H3z"/><path d="M3 11h18" class="a"/></svg></div><div class="qa" data-cmd="SAVE" title="Salvar projeto (.json)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 3h13l4 4v14H4z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg></div><div class="qa" id="btnUndo" title="Desfazer (Ctrl+Z)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></div><div class="qa" id="btnRedo" title="Refazer (Ctrl+Y)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg></div></div>
-    <div class="rb-tabs"><div class="rt on" data-tab="home">Início</div><div class="rt" data-tab="alti">Altimetria &amp; Escoamento</div><div class="rt" data-tab="io">Importar / Exportar · CFT</div><div class="rt" data-tab="view">Exibir</div></div>
+    <div class="rb-tabs"><div class="rt on" data-tab="home">Início</div><div class="rt" data-tab="alti">Altimetria &amp; Escoamento</div><div class="rt" data-tab="io">Importar / Exportar · Classificação</div><div class="rt" data-tab="view">Exibir</div></div>
     <div class="rb-right">
       <div class="qa wide" data-cmd="BASEMAP" title="Fundo do mapa"><svg viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span id="bmLbl">Fundo: Nenhum</span> ▾</div>
       <div class="qa" id="rbMin" title="Minimizar / fixar a faixa de opções (duplo clique na aba)">▴</div>
     </div>
   </div>
-  <div class="rb-body"><div class="rb-tab on" data-tab="home"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="LINE" title="Linha (L)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 20L20 4"/><rect x="2.5" y="18.5" width="3" height="3" class="f"/><rect x="18.5" y="2.5" width="3" height="3" class="f"/></svg><span>Linha</span></div><div class="rb lg" data-cmd="PLINE" title="Polyline (PL)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 19l5-9 6 5 7-11"/><circle cx="8" cy="10" r="1.4" class="f"/><circle cx="14" cy="15" r="1.4" class="f"/></svg><span>Polyline</span></div><div class="rb-col"><div class="rb sm" data-cmd="SPLINE" title="Spline (SPL)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 18C6 6 10 6 12 12s6 6 9-7"/></svg><span>Spline</span></div><div class="rb sm" data-cmd="DIM" title="Cota alinhada (DAL)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 7v12M20 7v12M4 15h16"/><path d="M4 15l3-2v4zM20 15l-3-2v4z" class="f"/><path d="M9 10h6" class="t"/></svg><span>Cota alinhada</span></div></div></div><div class="rb-lbl">Desenhar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb-col"><div class="rb sm" data-cmd="MOVE" title="Mover (M)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v18M3 12h18"/><path d="M12 3l-3 3h6zM12 21l-3-3h6zM3 12l3-3v6zM21 12l-3-3v6z" class="f"/></svg><span>Mover</span></div><div class="rb sm" data-cmd="COPY" title="Copiar (CO)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="4" y="4" width="11" height="11" rx="1"/><rect x="9" y="9" width="11" height="11" rx="1" class="a"/></svg><span>Copiar</span></div><div class="rb sm" data-cmd="ROTATE" title="Rotacionar (RO)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19 3v5h-5" /></svg><span>Rotacionar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="MIRROR" title="Espelhar (MI)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v18" stroke-dasharray="2 2"/><path d="M9 7L3 17h6z"/><path d="M15 7l6 10h-6z" class="a"/></svg><span>Espelhar</span></div><div class="rb sm" data-cmd="ARRAY" title="Matriz (AR)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="5" height="5"/><rect x="10" y="3" width="5" height="5"/><rect x="17" y="3" width="4" height="5"/><rect x="3" y="10" width="5" height="5"/><rect x="10" y="10" width="5" height="5"/><rect x="3" y="17" width="5" height="4"/></svg><span>Matriz</span></div><div class="rb sm" data-cmd="OFFSET" title="Offset (O)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 16C7 8 13 8 21 6"/><path d="M3 21C8 13 14 13 21 11" class="a"/></svg><span>Offset</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="TRIM" title="Aparar (TR)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 3v18" class="a"/><path d="M3 12h11"/><path d="M14 12h7" stroke-dasharray="2 2"/></svg><span>Aparar</span></div><div class="rb sm" data-cmd="EXTEND" title="Estender (EX)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 3v18" class="a"/><path d="M3 12h9"/><path d="M12 12h5" stroke-dasharray="2 2"/><path d="M17 12l-3-2.5v5z" class="f"/></svg><span>Estender</span></div><div class="rb sm" data-cmd="BREAK" title="Quebrar (BR)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 17L9 11M15 9l6-6"/><path d="M10 7l2 2M12 13l2 2" class="a"/></svg><span>Quebrar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="BRP" title="Quebrar no ponto (BRP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 21l7.5-7.5M13.5 10.5L21 3"/><circle cx="12" cy="12" r="2" class="f a2"/></svg><span>Quebrar no ponto</span></div><div class="rb sm" data-cmd="JOIN" title="Unir (J)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 17l6-6"/><path d="M15 11l6-6"/><path d="M9 11h6" class="a" stroke-width="2.6"/></svg><span>Unir</span></div><div class="rb sm" data-cmd="ERASE" title="Apagar (E)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" class="r"/></svg><span>Apagar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="MATCHPROP" title="Copiar propriedades (MA) — MATCHPROP: camada, cor e classificação CFT de um objeto para outros"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 3l7 7-6 6-7-7z"/><path d="M8 9l-4 4c-1.5 1.5-1 3 0 4l0 0c1 1 2.5 1.5 4 0l4-4" class="a"/><path d="M3.5 20.5l2-2" class="a"/></svg><span>Copiar propriedades</span></div></div></div><div class="rb-lbl">Modificar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="RPQ" title="Reduzir vértices (RPQ) — Reduzir pontos sem perda de qualidade (desvio máximo)" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 17c4-7 8-9 18-11" class="d"/><path d="M3 17L10 10.5 21 6"/><circle cx="3" cy="17" r="1.7" class="f"/><circle cx="10" cy="10.5" r="1.7" class="f a2"/><circle cx="21" cy="6" r="1.7" class="f"/></svg><span>Reduzir vértices</span></div><div class="rb lg" data-cmd="HME" title="Espaçar vértices (HME) — Espaçamento mínimo / máximo"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 18L21 6"/><circle cx="3" cy="18" r="1.3" class="f"/><circle cx="7.5" cy="15" r="1.3" class="f"/><circle cx="12" cy="12" r="1.3" class="f"/><circle cx="16.5" cy="9" r="1.3" class="f"/><circle cx="21" cy="6" r="1.3" class="f"/></svg><span>Espaçar vértices</span></div><div class="rb lg" data-cmd="OFFSETP" title="Offset passadas (OP) — Corta no talhão"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 4h16v16H4z" class="a"/><path d="M8 4v16M12 4v16M16 4v16"/></svg><span>Offset passadas</span></div><div class="rb lg" data-cmd="MBR" title="Quebra por layer (MBR) — Quebra todos os objetos dos layers escolhidos nos cruzamentos" style="--ic:#ff9f43"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M2 12h20" class="a"/><path d="M5 3v7M5 14v7M10 3v7M10 14v7M15 3v7M15 14v7M20 3v7M20 14v7"/></svg><span>Quebra por layer</span></div><div class="rb-col"><div class="rb sm" data-cmd="SMOOTH" title="Suavizar (FE)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 15l4-6 3 7 4-9 3 6 4-3" class="d"/><path d="M3 14c3-4 5-1 8-3s6-4 10-2" /></svg><span>Suavizar</span></div><div class="rb sm" data-cmd="CLOSE" title="Polígono (PG)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 7-3.5 11h-11L3 10z"/></svg><span>Polígono</span></div></div></div><div class="rb-lbl">Agro / Talhão</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="QSELECT" title="Seleção rápida (QSELECT)" style="--ic:#00e0ff"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 4h18l-7 8v6l-4 2v-8z"/><path d="M15 15l6 2-2.5 1L17 21z" class="f a2"/></svg><span>Seleção rápida</span></div><div class="rb-col"><div class="rb sm" data-cmd="SIMILAR" title="Similar (SS)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="5" width="7" height="7"/><rect x="14" y="12" width="7" height="7" class="a"/><path d="M12 6h3M12 9h3"/></svg><span>Similar</span></div><div class="rb sm" data-cmd="SELALL" title="Tudo (Ctrl+A)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="18" height="18" stroke-dasharray="3 2"/><path d="M7 15l4-6 6 7" class="a"/></svg><span>Tudo</span></div><div class="rb sm" data-cmd="SELINV" title="Inverter (INV)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="18" height="18"/><path d="M3 3h9v18H3z" class="f a"/></svg><span>Inverter</span></div></div></div><div class="rb-lbl">Seleção</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-act="OSMENU" title="Snap — Menu de snap — mesmo do Shift + botão direito"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 3v9a6 6 0 0 0 12 0V3h-4.5v9a1.5 1.5 0 0 1-3 0V3z"/><path d="M6 7h4.5M13.5 7H18" class="a"/></svg><span>Snap</span></div><div class="rb-col"><div class="rb sm" data-act="OSSET" title="Config. OSNAP"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span>Config. OSNAP</span></div></div></div><div class="rb-lbl">Precisão</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="ZOOMEXT" title="Enquadrar (ZE)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/><rect x="8" y="8" width="8" height="8" class="a"/></svg><span>Enquadrar</span></div></div><div class="rb-lbl">Vista</div></div></div><div class="rb-tab" data-tab="alti"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="IMPTIF" title="Importar GeoTIFF (IMPTIF) — MDT / Orto (.tif)" style="--ic:#e0954a"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 17l5-6 4 4 3-3 6 6" class="a"/><circle cx="16" cy="8.5" r="1.6"/></svg><span>Importar GeoTIFF</span></div><div class="rb-col"><div class="rb sm" data-cmd="RASTERS" title="Camadas raster"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5" class="a"/><path d="M3 16l9 5 9-5"/></svg><span>Camadas raster</span></div></div></div><div class="rb-lbl">Modelo do terreno</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="DECLIV" title="Declividade (DECLIV) — % por trecho" style="--ic:#ff5a4e"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 20h18L3 7z"/><text x="13" y="12" class="tx">%</text></svg><span>Declividade</span></div><div class="rb lg" data-cmd="SETASESC" title="Setas de escoamento (SETASESC)" style="--ic:#4a9cff"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M7 3v13M17 6v13"/><path d="M7 20l-3.5-5h7zM17 23l-3.5-5h7z" class="f a2"/></svg><span>Setas de escoamento</span></div></div><div class="rb-lbl">Análise</div></div></div><div class="rb-tab" data-tab="io"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="NOVO" title="Novo desenho (NOVO) — Abre um desenho novo em outra aba"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M13 11v7M9.5 14.5h7" class="a"/></svg><span>Novo desenho</span></div><div class="rb lg" data-cmd="LOAD" title="Abrir (OPEN) — .json (abre em aba nova)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 6h6l2 2h10v12H3z"/><path d="M3 11h18" class="a"/></svg><span>Abrir</span></div><div class="rb lg" data-cmd="SAVE" title="Salvar (SAVE) — .json"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 3h13l4 4v14H4z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><span>Salvar</span></div></div><div class="rb-lbl">Projeto</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg dd" title="Importar" style="--ic:#ffd23f"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 14v6h16v-6"/><path d="M12 3v12M7 10l5 5 5-5" class="a"/></svg><span>Importar ▾</span><div class="rb-menu"><div class="rm-it" data-cmd="IMPDWG"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><div><b>DWG / DXF</b><small>Desenho CAD (.dxf / .dwg)</small></div></div><div class="rm-it" data-cmd="IMPSHP"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><div><b>Shapefile</b><small>.shp (+ .dbf / .prj)</small></div></div><div class="rm-it" data-cmd="IMPKMZ"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">KMZ</text></svg><div><b>KMZ / KML</b><small>Google Earth</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="IMPMON"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 6v6M9 9.5l3 3 3-3" class="a"/></svg><div><b>Linhas de monitor</b><small>GS3 · Gen4 · Trimble · ISO · SHP</small></div></div><div class="rm-it" data-cmd="IMPTIF"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 17l5-6 4 4 3-3 6 6" class="a"/><circle cx="16" cy="8.5" r="1.6"/></svg><div><b>GeoTIFF</b><small>MDT / ortomosaico (.tif)</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="LOAD"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 6h6l2 2h10v12H3z"/><path d="M3 11h18" class="a"/></svg><div><b>Projeto CAD Web</b><small>.json</small></div></div></div></div><div class="rb-col"><div class="rb sm" data-cmd="IMPDWG" title="DWG / DXF (DXF)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><span>DWG / DXF</span></div><div class="rb sm" data-cmd="IMPSHP" title="Shapefile (SHP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><span>Shapefile</span></div><div class="rb sm" data-cmd="IMPKMZ" title="KMZ / KML (KMZ)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">KMZ</text></svg><span>KMZ / KML</span></div></div></div><div class="rb-lbl">Importar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg dd" title="Exportar" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 14v6h16v-6"/><path d="M12 15V3M7 8l5-5 5 5" class="a"/></svg><span>Exportar ▾</span><div class="rb-menu"><div class="rm-it" data-cmd="EXPORDXF"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><div><b>DXF R12</b><small>Para AutoCAD / AgroCAD</small></div></div><div class="rm-it" data-cmd="EXPORTSHP"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><div><b>Shapefile por camada</b><small>.zip com um SHP por layer</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="EXPMON"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 12V6M9 8.5l3-3 3 3" class="a"/></svg><div><b>Para monitor</b><small>Gen4 · GS3 · Trimble · SHP · KMZ</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="SAVE"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 3h13l4 4v14H4z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><div><b>Projeto CAD Web</b><small>.json</small></div></div></div></div><div class="rb-col"><div class="rb sm" data-cmd="EXPORDXF" title="DXF R12 (EXPORT)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><span>DXF R12</span></div><div class="rb sm" data-cmd="EXPORTSHP" title="SHP (camadas) (EXPSHP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><span>SHP (camadas)</span></div></div></div><div class="rb-lbl">Exportar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="CFT" title="Classificar (CFT) — Cliente · Fazenda · Talhão" style="--ic:#ff3b30"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.6" class="f"/></svg><span>Classificar</span></div><div class="rb lg" data-cmd="CFTA" title="Automático (CFTA) — Pelo contorno"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 7l7-4 9 5-2 11-12 2z"/><path d="M12 9l1 2.2 2.4.3-1.8 1.6.5 2.4L12 14.3l-2.1 1.2.5-2.4-1.8-1.6 2.4-.3z" class="f a2"/></svg><span>Automático</span></div><div class="rb-col"><div class="rb sm" data-cmd="CFTC" title="Copiar CFT (CFTC)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 10V3h7l9 9-7 7z"/><path d="M8 21l-3-3" class="a"/><path d="M14 21h7v-7" class="a"/></svg><span>Copiar CFT</span></div><div class="rb sm" data-cmd="CFTD" title="Desassociar (CFTD)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 12V4h8l10 10-8 8z"/><path d="M14 3l7 7M21 3l-7 7" class="r"/></svg><span>Desassociar</span></div><div class="rb sm" data-cmd="CFTV" title="Ver / legenda (CFTV)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3" class="a"/></svg><span>Ver / legenda</span></div></div></div><div class="rb-lbl">Classificação CFT</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="IMPMON" title="Importar monitor (IMPMON) — GS3 · Gen4 · Trimble · ISO · SHP" style="--ic:#ffd23f"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 6v6M9 9.5l3 3 3-3" class="a"/></svg><span>Importar monitor</span></div><div class="rb lg" data-cmd="EXPMON" title="Exportar p/ monitor (EXPMON) — Gen4 · GS3 · Trimble · SHP · KMZ" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 12V6M9 8.5l3-3 3 3" class="a"/></svg><span>Exportar p/ monitor</span></div></div><div class="rb-lbl">Monitores</div></div></div><div class="rb-tab" data-tab="view"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="BASEMAP" title="Fundo do mapa — Satélite / ruas / terreno"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span>Fundo do mapa</span></div><div class="rb lg" data-cmd="ZOOMEXT" title="Enquadrar (ZE)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/><rect x="8" y="8" width="8" height="8" class="a"/></svg><span>Enquadrar</span></div></div><div class="rb-lbl">Mapa</div></div><div class="rb-panel"><div class="rb-items"><div class="rb-col"><div class="rb sm" data-cmd="LAYERPANEL" title="Camadas"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M15 4v16"/><path d="M17 8h2M17 11h2M17 14h2" class="a"/></svg><span>Camadas</span></div><div class="rb sm" data-cmd="CFTV" title="Legenda CFT"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="4" width="5" height="4" class="f a2"/><rect x="3" y="10" width="5" height="4" class="f"/><rect x="3" y="16" width="5" height="4" class="f a2"/><path d="M11 6h10M11 12h10M11 18h10"/></svg><span>Legenda CFT</span></div><div class="rb sm" data-cmd="RASTERS" title="Camadas raster"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5" class="a"/><path d="M3 16l9 5 9-5"/></svg><span>Camadas raster</span></div></div></div><div class="rb-lbl">Painéis</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="CFG" title="Configurações"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span>Configurações</span></div><div class="rb lg" data-act="OSSET" title="Config. OSNAP"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 3v9a6 6 0 0 0 12 0V3h-4.5v9a1.5 1.5 0 0 1-3 0V3z"/><path d="M6 7h4.5M13.5 7H18" class="a"/></svg><span>Config. OSNAP</span></div></div><div class="rb-lbl">Ajustes</div></div></div></div>
+  <div class="rb-body"><div class="rb-tab on" data-tab="home"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="LINE" title="Linha (L)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 20L20 4"/><rect x="2.5" y="18.5" width="3" height="3" class="f"/><rect x="18.5" y="2.5" width="3" height="3" class="f"/></svg><span>Linha</span></div><div class="rb lg" data-cmd="PLINE" title="Polyline (PL)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 19l5-9 6 5 7-11"/><circle cx="8" cy="10" r="1.4" class="f"/><circle cx="14" cy="15" r="1.4" class="f"/></svg><span>Polyline</span></div><div class="rb-col"><div class="rb sm" data-cmd="SPLINE" title="Spline (SPL)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 18C6 6 10 6 12 12s6 6 9-7"/></svg><span>Spline</span></div><div class="rb sm" data-cmd="DIM" title="Cota alinhada (DAL)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 7v12M20 7v12M4 15h16"/><path d="M4 15l3-2v4zM20 15l-3-2v4z" class="f"/><path d="M9 10h6" class="t"/></svg><span>Cota alinhada</span></div></div></div><div class="rb-lbl">Desenhar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb-col"><div class="rb sm" data-cmd="MOVE" title="Mover (M)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v18M3 12h18"/><path d="M12 3l-3 3h6zM12 21l-3-3h6zM3 12l3-3v6zM21 12l-3-3v6z" class="f"/></svg><span>Mover</span></div><div class="rb sm" data-cmd="COPY" title="Copiar (CO)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="4" y="4" width="11" height="11" rx="1"/><rect x="9" y="9" width="11" height="11" rx="1" class="a"/></svg><span>Copiar</span></div><div class="rb sm" data-cmd="ROTATE" title="Rotacionar (RO)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19 3v5h-5" /></svg><span>Rotacionar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="MIRROR" title="Espelhar (MI)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3v18" stroke-dasharray="2 2"/><path d="M9 7L3 17h6z"/><path d="M15 7l6 10h-6z" class="a"/></svg><span>Espelhar</span></div><div class="rb sm" data-cmd="ARRAY" title="Matriz (AR)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="5" height="5"/><rect x="10" y="3" width="5" height="5"/><rect x="17" y="3" width="4" height="5"/><rect x="3" y="10" width="5" height="5"/><rect x="10" y="10" width="5" height="5"/><rect x="3" y="17" width="5" height="4"/></svg><span>Matriz</span></div><div class="rb sm" data-cmd="OFFSET" title="Offset (O)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 16C7 8 13 8 21 6"/><path d="M3 21C8 13 14 13 21 11" class="a"/></svg><span>Offset</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="TRIM" title="Aparar (TR)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 3v18" class="a"/><path d="M3 12h11"/><path d="M14 12h7" stroke-dasharray="2 2"/></svg><span>Aparar</span></div><div class="rb sm" data-cmd="EXTEND" title="Estender (EX)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 3v18" class="a"/><path d="M3 12h9"/><path d="M12 12h5" stroke-dasharray="2 2"/><path d="M17 12l-3-2.5v5z" class="f"/></svg><span>Estender</span></div><div class="rb sm" data-cmd="BREAK" title="Quebrar (BR)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 17L9 11M15 9l6-6"/><path d="M10 7l2 2M12 13l2 2" class="a"/></svg><span>Quebrar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="BRP" title="Quebrar no ponto (BRP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 21l7.5-7.5M13.5 10.5L21 3"/><circle cx="12" cy="12" r="2" class="f a2"/></svg><span>Quebrar no ponto</span></div><div class="rb sm" data-cmd="JOIN" title="Unir (J)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 17l6-6"/><path d="M15 11l6-6"/><path d="M9 11h6" class="a" stroke-width="2.6"/></svg><span>Unir</span></div><div class="rb sm" data-cmd="ERASE" title="Apagar (E)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" class="r"/></svg><span>Apagar</span></div></div><div class="rb-col"><div class="rb sm" data-cmd="MATCHPROP" title="Copiar propriedades (MA) — MATCHPROP: camada, cor e classificação de um objeto para outros"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 3l7 7-6 6-7-7z"/><path d="M8 9l-4 4c-1.5 1.5-1 3 0 4l0 0c1 1 2.5 1.5 4 0l4-4" class="a"/><path d="M3.5 20.5l2-2" class="a"/></svg><span>Copiar propriedades</span></div></div></div><div class="rb-lbl">Modificar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="RED" title="Reduzir vértices (RED) — Remove vértices sem desviar da linha original mais que o limite" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 17c4-7 8-9 18-11" class="d"/><path d="M3 17L10 10.5 21 6"/><circle cx="3" cy="17" r="1.7" class="f"/><circle cx="10" cy="10.5" r="1.7" class="f a2"/><circle cx="21" cy="6" r="1.7" class="f"/></svg><span>Reduzir vértices</span></div><div class="rb lg" data-cmd="ESP" title="Espaçar vértices (ESP) — Espaçamento mínimo / máximo"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 18L21 6"/><circle cx="3" cy="18" r="1.3" class="f"/><circle cx="7.5" cy="15" r="1.3" class="f"/><circle cx="12" cy="12" r="1.3" class="f"/><circle cx="16.5" cy="9" r="1.3" class="f"/><circle cx="21" cy="6" r="1.3" class="f"/></svg><span>Espaçar vértices</span></div><div class="rb lg" data-cmd="PAS" title="Passadas paralelas (PAS) — Linhas paralelas pela largura de passada, cortadas no talhão"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 4h16v16H4z" class="a"/><path d="M8 4v16M12 4v16M16 4v16"/></svg><span>Passadas paralelas</span></div><div class="rb lg" data-cmd="QL" title="Quebra por layer (QL) — Quebra todos os objetos dos layers escolhidos nos cruzamentos" style="--ic:#ff9f43"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M2 12h20" class="a"/><path d="M5 3v7M5 14v7M10 3v7M10 14v7M15 3v7M15 14v7M20 3v7M20 14v7"/></svg><span>Quebra por layer</span></div><div class="rb-col"><div class="rb sm" data-cmd="SMOOTH" title="Suavizar (SUA)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 15l4-6 3 7 4-9 3 6 4-3" class="d"/><path d="M3 14c3-4 5-1 8-3s6-4 10-2" /></svg><span>Suavizar</span></div><div class="rb sm" data-cmd="CLOSE" title="Fechar polígono (FEC)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 7-3.5 11h-11L3 10z"/></svg><span>Fechar polígono</span></div></div></div><div class="rb-lbl">Agro / Talhão</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="QSELECT" title="Seleção rápida (QSELECT)" style="--ic:#00e0ff"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 4h18l-7 8v6l-4 2v-8z"/><path d="M15 15l6 2-2.5 1L17 21z" class="f a2"/></svg><span>Seleção rápida</span></div><div class="rb-col"><div class="rb sm" data-cmd="SIMILAR" title="Similar (SIM)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="5" width="7" height="7"/><rect x="14" y="12" width="7" height="7" class="a"/><path d="M12 6h3M12 9h3"/></svg><span>Similar</span></div><div class="rb sm" data-cmd="SELALL" title="Tudo (Ctrl+A)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="18" height="18" stroke-dasharray="3 2"/><path d="M7 15l4-6 6 7" class="a"/></svg><span>Tudo</span></div><div class="rb sm" data-cmd="SELINV" title="Inverter (INV)"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="18" height="18"/><path d="M3 3h9v18H3z" class="f a"/></svg><span>Inverter</span></div></div></div><div class="rb-lbl">Seleção</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-act="OSMENU" title="Snap — Menu de snap — mesmo do Shift + botão direito"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 3v9a6 6 0 0 0 12 0V3h-4.5v9a1.5 1.5 0 0 1-3 0V3z"/><path d="M6 7h4.5M13.5 7H18" class="a"/></svg><span>Snap</span></div><div class="rb-col"><div class="rb sm" data-act="OSSET" title="Config. OSNAP"><svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span>Config. OSNAP</span></div></div></div><div class="rb-lbl">Precisão</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="ZOOMEXT" title="Enquadrar (ZE)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/><rect x="8" y="8" width="8" height="8" class="a"/></svg><span>Enquadrar</span></div></div><div class="rb-lbl">Vista</div></div></div><div class="rb-tab" data-tab="alti"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="IMPTIF" title="Importar GeoTIFF (IMPTIF) — MDT / Orto (.tif)" style="--ic:#e0954a"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 17l5-6 4 4 3-3 6 6" class="a"/><circle cx="16" cy="8.5" r="1.6"/></svg><span>Importar GeoTIFF</span></div><div class="rb-col"><div class="rb sm" data-cmd="RASTERS" title="Camadas raster"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5" class="a"/><path d="M3 16l9 5 9-5"/></svg><span>Camadas raster</span></div></div></div><div class="rb-lbl">Modelo do terreno</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="DECLIV" title="Declividade (DECLIV) — % por trecho" style="--ic:#ff5a4e"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 20h18L3 7z"/><text x="13" y="12" class="tx">%</text></svg><span>Declividade</span></div><div class="rb lg" data-cmd="SETASESC" title="Setas de escoamento (SETASESC)" style="--ic:#4a9cff"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M7 3v13M17 6v13"/><path d="M7 20l-3.5-5h7zM17 23l-3.5-5h7z" class="f a2"/></svg><span>Setas de escoamento</span></div></div><div class="rb-lbl">Análise</div></div></div><div class="rb-tab" data-tab="io"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="NOVO" title="Novo desenho (NOVO) — Abre um desenho novo em outra aba"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M13 11v7M9.5 14.5h7" class="a"/></svg><span>Novo desenho</span></div><div class="rb lg" data-cmd="LOAD" title="Abrir (OPEN) — .json (abre em aba nova)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 6h6l2 2h10v12H3z"/><path d="M3 11h18" class="a"/></svg><span>Abrir</span></div><div class="rb lg" data-cmd="SAVE" title="Salvar (SAVE) — .json"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 3h13l4 4v14H4z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><span>Salvar</span></div></div><div class="rb-lbl">Projeto</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg dd" title="Importar" style="--ic:#ffd23f"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 14v6h16v-6"/><path d="M12 3v12M7 10l5 5 5-5" class="a"/></svg><span>Importar ▾</span><div class="rb-menu"><div class="rm-it" data-cmd="IMPDWG"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><div><b>DWG / DXF</b><small>Desenho CAD (.dxf / .dwg)</small></div></div><div class="rm-it" data-cmd="IMPSHP"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><div><b>Shapefile</b><small>.shp (+ .dbf / .prj)</small></div></div><div class="rm-it" data-cmd="IMPKMZ"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">KMZ</text></svg><div><b>KMZ / KML</b><small>Google Earth</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="IMPMON"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 6v6M9 9.5l3 3 3-3" class="a"/></svg><div><b>Linhas de monitor</b><small>GS3 · Gen4 · Trimble · ISO · SHP</small></div></div><div class="rm-it" data-cmd="IMPTIF"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 17l5-6 4 4 3-3 6 6" class="a"/><circle cx="16" cy="8.5" r="1.6"/></svg><div><b>GeoTIFF</b><small>MDT / ortomosaico (.tif)</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="LOAD"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 6h6l2 2h10v12H3z"/><path d="M3 11h18" class="a"/></svg><div><b>Projeto Linhas Pro</b><small>.json</small></div></div></div></div><div class="rb-col"><div class="rb sm" data-cmd="IMPDWG" title="DWG / DXF (DXF)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><span>DWG / DXF</span></div><div class="rb sm" data-cmd="IMPSHP" title="Shapefile (SHP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><span>Shapefile</span></div><div class="rb sm" data-cmd="IMPKMZ" title="KMZ / KML (KMZ)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">KMZ</text></svg><span>KMZ / KML</span></div></div></div><div class="rb-lbl">Importar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg dd" title="Exportar" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 14v6h16v-6"/><path d="M12 15V3M7 8l5-5 5 5" class="a"/></svg><span>Exportar ▾</span><div class="rb-menu"><div class="rm-it" data-cmd="EXPORDXF"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><div><b>DXF R12</b><small>Para AutoCAD / Civil 3D</small></div></div><div class="rm-it" data-cmd="EXPORTSHP"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><div><b>Shapefile por camada</b><small>.zip com um SHP por layer</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="EXPMON"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 12V6M9 8.5l3-3 3 3" class="a"/></svg><div><b>Para monitor</b><small>Gen4 · GS3 · Trimble · SHP · KMZ</small></div></div><div class="rm-sep"></div><div class="rm-it" data-cmd="SAVE"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 3h13l4 4v14H4z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></svg><div><b>Projeto Linhas Pro</b><small>.json</small></div></div></div></div><div class="rb-col"><div class="rb sm" data-cmd="EXPORDXF" title="DXF R12 (EXPORT)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">DXF</text></svg><span>DXF R12</span></div><div class="rb sm" data-cmd="EXPORTSHP" title="SHP (camadas) (EXPSHP)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 2h9l5 5v15H6z"/><text x="13" y="17.5" class="tx2">SHP</text></svg><span>SHP (camadas)</span></div></div></div><div class="rb-lbl">Exportar</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="CL" title="Classificar (CL) — Cliente · Fazenda · Talhão" style="--ic:#ff3b30"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.6" class="f"/></svg><span>Classificar</span></div><div class="rb lg" data-cmd="CLA" title="Pelo contorno (CLA) — Classifica as linhas pelo contorno do talhão"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 7l7-4 9 5-2 11-12 2z"/><path d="M12 9l1 2.2 2.4.3-1.8 1.6.5 2.4L12 14.3l-2.1 1.2.5-2.4-1.8-1.6 2.4-.3z" class="f a2"/></svg><span>Pelo contorno</span></div><div class="rb-col"><div class="rb sm" data-cmd="CLC" title="Copiar classificação (CLC)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 10V3h7l9 9-7 7z"/><path d="M8 21l-3-3" class="a"/><path d="M14 21h7v-7" class="a"/></svg><span>Copiar classificação</span></div><div class="rb sm" data-cmd="CLD" title="Desassociar (CLD)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 12V4h8l10 10-8 8z"/><path d="M14 3l7 7M21 3l-7 7" class="r"/></svg><span>Desassociar</span></div><div class="rb sm" data-cmd="CLV" title="Ver / legenda (CLV)"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3" class="a"/></svg><span>Ver / legenda</span></div></div></div><div class="rb-lbl">Classificação</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="IMPMON" title="Importar monitor (IMPMON) — GS3 · Gen4 · Trimble · ISO · SHP" style="--ic:#ffd23f"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 6v6M9 9.5l3 3 3-3" class="a"/></svg><span>Importar monitor</span></div><div class="rb lg" data-cmd="EXPMON" title="Exportar p/ monitor (EXPMON) — Gen4 · GS3 · Trimble · SHP · KMZ" style="--ic:#37d67a"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="3" width="18" height="12" rx="1.5"/><path d="M8 19h8M12 15v4"/><path d="M12 12V6M9 8.5l3-3 3 3" class="a"/></svg><span>Exportar p/ monitor</span></div></div><div class="rb-lbl">Monitores</div></div></div><div class="rb-tab" data-tab="view"><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="BASEMAP" title="Fundo do mapa — Satélite / ruas / terreno"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><span>Fundo do mapa</span></div><div class="rb lg" data-cmd="ZOOMEXT" title="Enquadrar (ZE)"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5"/><rect x="8" y="8" width="8" height="8" class="a"/></svg><span>Enquadrar</span></div></div><div class="rb-lbl">Mapa</div></div><div class="rb-panel"><div class="rb-items"><div class="rb-col"><div class="rb sm" data-cmd="LAYERPANEL" title="Camadas"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M15 4v16"/><path d="M17 8h2M17 11h2M17 14h2" class="a"/></svg><span>Camadas</span></div><div class="rb sm" data-cmd="CLV" title="Legenda da classificação"><svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="4" width="5" height="4" class="f a2"/><rect x="3" y="10" width="5" height="4" class="f"/><rect x="3" y="16" width="5" height="4" class="f a2"/><path d="M11 6h10M11 12h10M11 18h10"/></svg><span>Legenda da classificação</span></div><div class="rb sm" data-cmd="RASTERS" title="Camadas raster"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5" class="a"/><path d="M3 16l9 5 9-5"/></svg><span>Camadas raster</span></div></div></div><div class="rb-lbl">Painéis</div></div><div class="rb-panel"><div class="rb-items"><div class="rb lg" data-cmd="CFG" title="Configurações"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span>Configurações</span></div><div class="rb lg" data-act="OSSET" title="Config. OSNAP"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M6 3v9a6 6 0 0 0 12 0V3h-4.5v9a1.5 1.5 0 0 1-3 0V3z"/><path d="M6 7h4.5M13.5 7H18" class="a"/></svg><span>Config. OSNAP</span></div></div><div class="rb-lbl">Ajustes</div></div></div></div>
 </div>
 
   <div id="stage">
@@ -427,7 +427,7 @@
 
   <div id="cmdbar">
     <div id="cmdlog"></div>
-    <div id="cmdrow"><span id="prompt">Comando:</span><input id="cmd" autocomplete="off" spellcheck="false" placeholder="Digite L, PL, M, DXF, SHP, SAVE, HME, TR, EX, O, OP, J, ZE..."></div>
+    <div id="cmdrow"><span id="prompt">Comando:</span><input id="cmd" autocomplete="off" spellcheck="false" placeholder=""></div>
   </div>
 
   <div id="status">
@@ -977,11 +977,11 @@ function startTool(cmd){
     case 'EXTEND': tool.name='extend'; setPrompt('EXTEND · Clique na ponta a estender:'); log('> EXTEND','p'); break;
     case 'BREAK': edStartBreak(); return;
     case 'BRP': edStartBRP(); return;
-    case 'MBR': edStartMBR(); return;
+    case 'QL': edStartQL(); return;
     case 'OFFSET': startOffsetInteractive(); break;
-    case 'OFFSETP': startOffsetPassadasAuto(); break;
-    case 'HME': spOpen('hme'); return;
-    case 'RPQ': spOpen('rpq'); return;
+    case 'PAS': startOffsetPassadasAuto(); break;
+    case 'ESP': spOpen('esp'); return;
+    case 'RED': spOpen('red'); return;
     case 'JOIN': doJoin(); break;
     case 'SIMILAR': doSelectSimilar(); break;
     case 'SMOOTH': doSmooth(); break;
@@ -996,13 +996,13 @@ function startTool(cmd){
     case 'DECLIV': analisarDeclividade(); break;
     case 'SETASESC': gerarSetasEscoamento(); break;
     case 'SAVE': doSaveProject(); break;
-    case 'LOAD': openFile('.json,.agrocad', loadJSON); break;
+    case 'LOAD': openFile('.json', loadJSON); break;
     case 'ZOOMEXT': zoomExtents(); break;
-    case 'CFT': cftOpenDialog(); break;
-    case 'CFTV': cftToggleView(); break;
-    case 'CFTD': cftDisassociate(); break;
-    case 'CFTC': cftStartCopy(); return;
-    case 'CFTA': cftAutoByBoundary(); break;
+    case 'CL': cftOpenDialog(); break;
+    case 'CLV': cftToggleView(); break;
+    case 'CLD': cftDisassociate(); break;
+    case 'CLC': cftStartCopy(); return;
+    case 'CLA': cftAutoByBoundary(); break;
     case 'IMPMON': cftImportDialog(); break;
     case 'EXPMON': cftExportDialog(); break;
     case 'MATCHPROP': maStart(); return;
@@ -1157,16 +1157,15 @@ function executeArrayPolar(center){
   tool.reset(); S.dirty=true;
 }
 
-// HME
-function executeHME(){
+function executeDensify(){
   const target = ents.find(e => selection.has(e.id) && e.pts) || ents[ents.length - 1];
   if(!target || !target.pts || target.pts.length < 2){
-    log("HME: Selecione primeiro uma linha para densificar vértices.", "e");
+    log("Selecione primeiro uma linha para densificar vértices.", "e");
     return;
   }
-  const distStr = prompt("HME · Especifique o espaçamento métrico entre vértices (m):", "2.00");
+  const distStr = prompt("Espaçamento entre vértices (m):", "2.00");
   const stepM = parseFloat(distStr);
-  if(!(stepM > 0)){ log("HME: Distância inválida.", "e"); return; }
+  if(!(stepM > 0)){ log("Distância inválida.", "e"); return; }
 
   pushState();
   const oldPts = target.pts;
@@ -1187,7 +1186,7 @@ function executeHME(){
   }
 
   target.pts = newPts;
-  log(`HME Concluído: Polilinha densificada com ${newPts.length} vértices (a cada ${stepM}m).`, "g");
+  log(`Polilinha densificada com ${newPts.length} vértices (a cada ${stepM}m).`, "g");
   updateProps();
   S.dirty = true;
 }
@@ -1560,10 +1559,10 @@ function showCanvasMenu(x,y){
     {label:'Exportar Shapefile (SHP)', fn:exportShapefileZip},
     {label:'Exportar DXF Universal', fn:exportProjectDXF},
     {label:'Select Similar (SS)', fn:doSelectSimilar},
-    {label:'Densificar Vértices (HME)', fn:executeHME},
+    {label:'Espaçar vértices (ESP)', fn:()=>startTool('ESP')},
     {label:'Aparar (TR)', fn:()=>startTool('TRIM')},
     {label:'Estender (EX)', fn:()=>startTool('EXTEND')},
-    {label:'Offset Passadas (OP)', fn:()=>startTool('OFFSETP')},
+    {label:'Offset Passadas (OP)', fn:()=>startTool('PAS')},
     {label:'Enquadrar (ZE)', fn:zoomExtents},
     'sep',
     {label:'💾 Salvar no navegador agora', fn:autosaveNow},
@@ -1801,7 +1800,7 @@ function offsetSideSign(base, clickPt){
 
 // Offset Automático de Passadas
 function startOffsetPassadasAuto(){
-  const d = parseFloat(prompt("OFFSETP · Espaçamento entre passadas agrícolas (m):", "0.90"));
+  const d = parseFloat(prompt("Passadas paralelas · espaçamento entre passadas (m):", "0.90"));
   if(!(d > 0)) return;
   const target = ents.find(e => selection.has(e.id) && e.pts) || ents[ents.length - 1];
   if(!target) return;
@@ -1928,7 +1927,7 @@ function importDWG_DXF(){
               1. Abra seu arquivo no <b>AutoCAD</b> ou <b>Civil 3D</b>.<br>
               2. Digite <code>DXFOUT</code>.<br>
               3. Salve como <b>AutoCAD R12 / 2000 / 2018 DXF (*.dxf)</b>.<br>
-              4. Carregue o arquivo <b>.DXF</b> diretamente no AgroCAD.
+              4. Carregue o arquivo <b>.DXF</b> diretamente no CAD.
             </p>
             <div class="row"><button class="ok" onclick="closeModal()">Entendido</button></div>
           `);
@@ -2240,7 +2239,7 @@ function exportProjectDXF(onlyLayerId){
     const blob = new Blob([out], { type: 'application/dxf' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `agrocad_dxf_${Date.now()}.dxf`;
+    a.download = `linhaspro_dxf_${Date.now()}.dxf`;
     a.click();
     log(`Projeto exportado para DXF (${crs.mode.toUpperCase()}) com sucesso.`, 'g');
   });
@@ -2290,7 +2289,7 @@ function exportShapefileZip(onlyLayerId){
     zip.generateAsync({ type: 'blob' }).then(content => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(content);
-      a.download = `agrocad_shapefiles_${crs.mode.toUpperCase()}_${Date.now()}.zip`;
+      a.download = `linhaspro_shp_${crs.mode.toUpperCase()}_${Date.now()}.zip`;
       a.click();
       log(`Shapefiles exportados com sucesso (${totalLayersExported} camadas em ${crs.mode.toUpperCase()}).`, 'g');
     });
@@ -2494,7 +2493,7 @@ function buildPointShapefileBuffers(layerEnts, crs){
 // Salvar Projeto Completo
 function doSaveProject(){
   const data = {
-    app: "AgroCAD Web Pro",
+    app: "Linhas Pro",
     version: 3,
     savedAt: new Date().toISOString(),
     georef: { lat0: S.lat0, lon0: S.lon0 },
@@ -2505,9 +2504,9 @@ function doSaveProject(){
   const b = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a'); 
   a.href = URL.createObjectURL(b); 
-  a.download = `projeto_agrocad_${Date.now()}.json`; 
+  a.download = `projeto_linhaspro_${Date.now()}.json`; 
   a.click();
-  log('Projeto AgroCAD salvo com sucesso.', 'g');
+  log('Projeto salvo.', 'g');
 }
 
 function loadJSON(f){
@@ -3001,40 +3000,25 @@ window.addEventListener('keydown', ev=>{
 // Terminal
 const cmdInput = document.getElementById('cmd');
 const ALIASES = {
-  'L': 'LINE', 'LINE': 'LINE',
-  'PL': 'PLINE', 'PLINE': 'PLINE',
-  'SPL': 'SPLINE', 'SPLINE': 'SPLINE',
-  'M': 'MOVE', 'MOVE': 'MOVE', 'MOVER': 'MOVE',
-  'CO': 'COPY', 'COPY': 'COPY', 'COPIAR': 'COPY',
-  'RO': 'ROTATE', 'ROTATE': 'ROTATE', 'GIRAR': 'ROTATE',
-  'MI': 'MIRROR', 'MIRROR': 'MIRROR', 'ESPELHAR': 'MIRROR',
-  'AR': 'ARRAY', 'ARRAY': 'ARRAY', 'MATRIZ': 'ARRAY',
-  'DAL': 'DIM', 'DIM': 'DIM',
-  'HME': 'HME', 'DENSIFICAR': 'HME',
-  'TR': 'TRIM', 'TRIM': 'TRIM',
-  'EX': 'EXTEND', 'EXTEND': 'EXTEND',
-  'BR': 'BREAK', 'BREAK': 'BREAK',
-  'O': 'OFFSET', 'OFFSET': 'OFFSET',
-  'OP': 'OFFSETP', 'OFFSETP': 'OFFSETP',
-  'J': 'JOIN', 'JOIN': 'JOIN',
-  'SS': 'SIMILAR', 'SIMILAR': 'SIMILAR',
-  'FE': 'SMOOTH', 'SMOOTH': 'SMOOTH',
-  'PG': 'CLOSE', 'CLOSE': 'CLOSE',
-  'E': 'ERASE', 'ERASE': 'ERASE',
-  'ZE': 'ZOOMEXT', 'Z': 'ZOOMEXT',
-  'U': 'UNDO', 'UNDO': 'UNDO',
-  'REDO': 'REDO', 
-  'DWG': 'IMPDWG', 'DXF': 'IMPDWG',
-  'SAVE': 'SAVE', 'OPEN': 'LOAD', 'EXPORT': 'EXPORDXF',
-  'SHP': 'IMPSHP', 'EXPSHP': 'EXPORTSHP', 'KMZ': 'IMPKMZ', 'KML': 'IMPKMZ',
-  'CFT': 'CFT', 'CFTV': 'CFTV', 'CFTD': 'CFTD', 'CFTC': 'CFTC', 'CFTA': 'CFTA',
-  'IMPMON': 'IMPMON', 'GOIMP': 'IMPMON', 'EXPMON': 'EXPMON', 'GOEXP': 'EXPMON',
-  'QSELECT': 'QSELECT', 'QSE': 'QSELECT', 'QS': 'QSELECT', 'SELALL': 'SELALL', 'ALL': 'SELALL', 'INV': 'SELINV', 'SELINV': 'SELINV',
-  'RPQ': 'RPQ', 'REDUZIR': 'RPQ', 'SIMPLIFICAR': 'RPQ', 'DIMINUIR': 'RPQ', 'DP': 'RPQ',
-  'NOVO': 'NOVO', 'NEW': 'NOVO', 'QNEW': 'NOVO', 'COPYCLIP': 'COPYCLIP', 'PASTECLIP': 'PASTECLIP', 'PASTEORIG': 'PASTECLIP',
-  'MA': 'MATCHPROP', 'MATCHPROP': 'MATCHPROP', 'PINCEL': 'MATCHPROP',
-  'BRP': 'BRP', 'BREAKATPOINT': 'BRP', 'MBR': 'MBR', 'QUEBRAR': 'BREAK', 'APARAR': 'TRIM',
-  'IMPTIF': 'IMPTIF', 'TIF': 'IMPTIF', 'DECLIV': 'DECLIV', 'SETASESC': 'SETASESC', 'SETAS': 'SETASESC'
+  'L':'LINE','LINE':'LINE','LINHA':'LINE', 'PL':'PLINE','PLINE':'PLINE', 'SPL':'SPLINE','SPLINE':'SPLINE',
+  'M':'MOVE','MOVE':'MOVE','MOVER':'MOVE', 'CO':'COPY','COPY':'COPY','COPIAR':'COPY', 'RO':'ROTATE','ROTATE':'ROTATE','GIRAR':'ROTATE',
+  'MI':'MIRROR','MIRROR':'MIRROR','ESPELHAR':'MIRROR', 'AR':'ARRAY','ARRAY':'ARRAY','MATRIZ':'ARRAY',
+  'DAL':'DIM','DIM':'DIM','COTA':'DIM',
+  'TR':'TRIM','TRIM':'TRIM','APARAR':'TRIM', 'EX':'EXTEND','EXTEND':'EXTEND','ESTENDER':'EXTEND',
+  'BR':'BREAK','BREAK':'BREAK','QUEBRAR':'BREAK', 'BRP':'BRP','BREAKATPOINT':'BRP',
+  'O':'OFFSET','OFFSET':'OFFSET', 'J':'JOIN','JOIN':'JOIN','UNIR':'JOIN', 'E':'ERASE','ERASE':'ERASE','APAGAR':'ERASE',
+  'ZE':'ZOOMEXT','Z':'ZOOMEXT', 'U':'UNDO','UNDO':'UNDO', 'REDO':'REDO',
+  'MA':'MATCHPROP','MATCHPROP':'MATCHPROP', 'QSELECT':'QSELECT','QSE':'QSELECT','QS':'QSELECT',
+  'SELALL':'SELALL','ALL':'SELALL','TUDO':'SELALL', 'INV':'SELINV','SELINV':'SELINV', 'SIM':'SIMILAR','SIMILAR':'SIMILAR',
+  'ESP':'ESP','ESPACAR':'ESP','DENSIFICAR':'ESP', 'RED':'RED','REDUZIR':'RED','SIMPLIFICAR':'RED',
+  'PAS':'PAS','PASSADAS':'PAS', 'SUA':'SMOOTH','SUAVIZAR':'SMOOTH', 'FEC':'CLOSE','FECHAR':'CLOSE',
+  'QL':'QL','QUEBRALAYER':'QL',
+  'CL':'CL','CLASSIFICAR':'CL', 'CLV':'CLV', 'CLD':'CLD', 'CLC':'CLC', 'CLA':'CLA',
+  'IMPMON':'IMPMON', 'EXPMON':'EXPMON',
+  'DWG':'IMPDWG','DXF':'IMPDWG', 'SHP':'IMPSHP', 'KMZ':'IMPKMZ','KML':'IMPKMZ', 'EXPDXF':'EXPORDXF','EXPORT':'EXPORDXF', 'EXPSHP':'EXPORTSHP',
+  'SAVE':'SAVE','SALVAR':'SAVE', 'OPEN':'LOAD','ABRIR':'LOAD', 'NOVO':'NOVO','NEW':'NOVO',
+  'COPYCLIP':'COPYCLIP', 'PASTECLIP':'PASTECLIP','PASTEORIG':'PASTECLIP',
+  'IMPTIF':'IMPTIF','TIF':'IMPTIF', 'DECLIV':'DECLIV','DECLIVIDADE':'DECLIV', 'SETAS':'SETASESC','SETASESC':'SETASESC'
 };
 
 cmdInput.addEventListener('keydown', e => {
@@ -3085,7 +3069,7 @@ cv.oncontextmenu = () => false;
 
 /* ================= MODULO RASTER + DECLIVIDADE + SETAS ================= */
 /* =====================================================================
-   MODULO RASTER + DECLIVIDADE + SETAS DE ESCOAMENTO   (AgroCAD Web)
+   MODULO RASTER + DECLIVIDADE + SETAS DE ESCOAMENTO   (AgroLinhas Pro)
    Depende de: GeoTIFF (global), S, ents, layers, commit, pushState,
    toLatLon, fromLatLon, latLonToUtm, w2sx, w2sy, log, render, renderLayers,
    getOrCreateLayer, zoomExtents, selection, LB, newId
@@ -3614,14 +3598,29 @@ function renderRasterPanel(){
 // Este patch sobrescreve renderLayers pra adicionar sub-legendas nas camadas de análise
 
 /* ===== PERSISTENCIA AUTOMATICA NO NAVEGADOR (IndexedDB) ===== */
-const _DB='agrocad_db', _STORE='kv', _AUTOKEY='autosave';
+const _DB='linhaspro_db', _STORE='kv', _AUTOKEY='autosave';
 function _idb(){ return new Promise((res,rej)=>{ const r=indexedDB.open(_DB,1); r.onupgradeneeded=()=>r.result.createObjectStore(_STORE); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
 async function _idbPut(k,v){ const db=await _idb(); return new Promise((res,rej)=>{ const tx=db.transaction(_STORE,'readwrite'); tx.objectStore(_STORE).put(v,k); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
-async function _idbGet(k){ const db=await _idb(); return new Promise((res,rej)=>{ const tx=db.transaction(_STORE,'readonly'); const q=tx.objectStore(_STORE).get(k); q.onsuccess=()=>res(q.result); q.onerror=()=>rej(q.error); }); }
+let _migrP=null;
+function _idbMigrate(){ // copia o autosave do armazenamento antigo (versões anteriores) e apaga o antigo
+  if(_migrP) return _migrP;
+  _migrP=(async()=>{ try{
+    const OLD='agro'+'cad_db';   // nome do armazenamento das versões anteriores
+    const nd=await _idb(); const has=await new Promise(r=>{ const q=nd.transaction(_STORE).objectStore(_STORE).count(); q.onsuccess=()=>r(q.result>0); q.onerror=()=>r(true); });
+    if(has) return;
+    const od=await new Promise(res=>{ const r=indexedDB.open(OLD); r.onupgradeneeded=()=>{ try{ r.result.createObjectStore(_STORE); }catch(_){} }; r.onsuccess=()=>res(r.result); r.onerror=()=>res(null); });
+    if(!od || !od.objectStoreNames.contains(_STORE)){ if(od) od.close(); try{ indexedDB.deleteDatabase(OLD); }catch(_){} return; }
+    const all=await new Promise(r=>{ const out={}; const c=od.transaction(_STORE).objectStore(_STORE).openCursor(); c.onsuccess=e=>{ const cur=e.target.result; if(cur){ out[cur.key]=cur.value; cur.continue(); } else r(out); }; c.onerror=()=>r(out); });
+    od.close(); for(const k in all) await _idbPut(k,all[k]);
+    try{ indexedDB.deleteDatabase(OLD); }catch(_){}
+  }catch(_){} })();
+  return _migrP;
+}
+async function _idbGet(k){ await _idbMigrate(); const db=await _idb(); return new Promise((res,rej)=>{ const tx=db.transaction(_STORE,'readonly'); const q=tx.objectStore(_STORE).get(k); q.onsuccess=()=>res(q.result); q.onerror=()=>rej(q.error); }); }
 async function _idbDel(k){ const db=await _idb(); return new Promise((res,rej)=>{ const tx=db.transaction(_STORE,'readwrite'); tx.objectStore(_STORE).delete(k); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
 
 function snapshotProject(){
-  return { app:'AgroCAD Web Pro', version:3, savedAt:new Date().toISOString(),
+  return { app:'Linhas Pro', version:3, savedAt:new Date().toISOString(),
     georef:{lat0:S.lat0, lon0:S.lon0},
     view:{cx:S.cx, cy:S.cy, scale:S.scale, basemap:S.basemap},
     activeLayer, layers, ents, cftReg:(typeof cftReg!=='undefined'?cftReg:[]) };
@@ -3654,7 +3653,7 @@ async function limparAutosave(){ try{ await _idbDel(_AUTOKEY); log('Autosave do 
 
 renderLayers();
 resize();
-log('AgroCAD Web Pro Carregado. GeoTIFF (MDT/Orto), Declividade e Setas de escoamento ativados.', 'p');
+
 render();
 
 // ativa persistencia automatica no navegador
@@ -3683,7 +3682,7 @@ const CONV=(function(){
               clientGuid?, farmGuid?, fieldGuid?, erid?, gen4Guid?,
               refLat?, refLon?, farmLM?, fieldLM?, src }
    Leitores: SHP, KML/KMZ, GS3 2630, Gen4, Trimble AgGPS, TASKDATA
-   Escritores: Gen4, Trimble AgGPS, TASKDATA, SHP (AgroCAD), KMZ
+   Escritores: Gen4, Trimble AgGPS, TASKDATA, SHP, KMZ
    ===================================================================== */
 
 /* ------------------------------ util -------------------------------- */
@@ -4021,7 +4020,7 @@ function shpFiles(prefix,w){
 
 /* =========================== DETECCAO =============================== */
 const FORMATS={
-  shp:{label:"Shapefile (AgroCAD / QGIS)",attr:true},
+  shp:{label:"Shapefile (QGIS / CAD)",attr:true},
   kml:{label:"KML / KMZ",attr:true},
   gs3:{label:"John Deere GS3 2630"},
   gen4:{label:"John Deere Gen4 (GS4/GS5)"},
@@ -4197,7 +4196,7 @@ function readGS3(items){
       for(const ch of desc(tr,"*")){ const ln=lname(ch);
         if(ln==="vrReferenceLatitude") refLat=parseFloat(attr(ch,"value"));
         else if(ln==="vrReferenceLongitude") refLon=parseFloat(attr(ch,"value"));
-        else if(ln==="MBR"){ s=parseFloat(attr(ch,"south")); w=parseFloat(attr(ch,"west")); } }
+        else if(ln==="QL"){ s=parseFloat(attr(ch,"south")); w=parseFloat(attr(ch,"west")); } }
       if(!isFinite(refLat)) refLat=s; if(!isFinite(refLon)) refLon=w;
       let fp=dir+fileName+".fdShape";
       if(!by.has(fp)){ const alt=paths.find(p=>p.toLowerCase()===fp.toLowerCase()) || (tracks.length===1&&shapesInDir.length===1?shapesInDir[0]:null); if(!alt){ warn.push("Sem .fdShape: "+(attr(tr,"name")||erid)); continue; } fp=alt; }
@@ -4481,7 +4480,7 @@ function writeTaskdata(lines){
   return [{name:"TASKDATA/TASKDATA.XML",data:ENC.encode(L.join("\r\n"))}];
 }
 
-/* ---- SHP estilo AgroCAD ---- */
+/* ---- SHP por talhão (CLIENTE#FAZENDA#TALHAO) ---- */
 const SHP_OUT_FIELDS=[{name:"CLIENTE",type:"C",len:100},{name:"FAZENDA",type:"C",len:100},
   {name:"TALHAO",type:"C",len:100},{name:"NOME",type:"C",len:100},{name:"COMPR_M",type:"N",len:14,dec:2}];
 function shpRecs(ls){ return ls.map(l=>({parts:l.parts,values:[l.client,l.farm,l.field,l.name,lineLength(l)]})); }
@@ -4579,7 +4578,7 @@ function exportGS3(items,cef,stripPrefix){
   }
   return {fname:"GS3_2630.zip",zip:zipStore(out),files:out.length,farms};
 }
-/* ---- GS3 2630 gerado do zero (engenharia reversa do export AgroCAD/GS3 8143_PLANTIO20) ----
+/* ---- GS3 2630 gerado do zero (engenharia reversa do export GS3 8143_PLANTIO20) ----
    GS3_2630/<NOME>/RCD/EIC/{setup.fds, global.ver, host}
    Fields/<2 ultimos hex do 1o bloco do GUID do talhao>/<guid>/ImportExport.SpatialCatalog + CurveTrack<guid>.fdShape
    fdShape: cabecalho 64 B (int32 @16=0x0201, @32=1, @48=1, @56=n registros) + registros de 20 B
@@ -4659,11 +4658,11 @@ const WRITERS={
   trimble:{label:"Trimble AgGPS (Precision-IQ / XCN-2050)",prefix:"AgGPS",ext:"zip",fn:(ls)=>writeTrimble(ls)},
   taskdata:{label:"TASKDATA ISO-XML (Topcon/ISOBUS)",prefix:"TASKDATA",ext:"zip",fn:(ls)=>writeTaskdata(ls),beta:true},
   gs3:{label:"John Deere GS3 2630",prefix:"GS3_2630",ext:"zip",fn:(ls,o)=>writeGS3(ls,o)},
-  shp:{label:"Shapefile (AgroCAD / QGIS)",prefix:"SHP",ext:"zip",fn:(ls,o)=>writeShpOut(ls,o.perTalhao)},
+  shp:{label:"Shapefile (QGIS / CAD)",prefix:"SHP",ext:"zip",fn:(ls,o)=>writeShpOut(ls,o.perTalhao)},
   kmz:{label:"KMZ (Google Earth)",prefix:"Linhas",ext:"kmz",fn:(ls,o)=>writeKmz(ls,o)}
 };
 
-/* ============ SIMPLIFICAR / ESPAÇAR VÉRTICES (igual ao CAD: Douglas-Peucker + HME mín/máx), em UTM ============ */
+/* ============ SIMPLIFICAR / ESPAÇAR VÉRTICES (igual ao CAD: Douglas-Peucker + espaçamento mín/máx), em UTM ============ */
 function dpSimplify(P,tol){
   const n=P.length; if(n<3||!(tol>0)) return P.slice();
   const keep=new Uint8Array(n); keep[0]=keep[n-1]=1; const st=[[0,n-1]];
@@ -4736,12 +4735,12 @@ return {FORMATS,detectFormat,readLayers,readMonitor,guessMapping,applyMapping,ex
 </script>
 <script>
 /* =====================================================================
-   MODULO CFT (Cliente / Fazenda / Talhão) + IMPORT/EXPORT DE MONITORES
-   Classificação para exportação no estilo AgroCAD:
+   MODULO DE CLASSIFICAÇÃO (Cliente / Fazenda / Talhão) + IMPORT/EXPORT DE MONITORES
+   Classificação das linhas para exportação:
      - cadastro de Cliente > Fazenda > Talhão (cada talhão com uma cor)
-     - seleciona objetos e associa ao CFT ativo
-     - modo de visualização da classificação + legenda "Divisão para exportação"
-     - exporta direto pra Gen4 (GS4/GS5), GS3 2630, Trimble AgGPS, SHP AgroCAD, KMZ
+     - seleciona objetos e associa à classificação ativa
+     - modo de visualização da classificação + legenda com o resumo da classificação
+     - exporta direto pra Gen4 (GS4/GS5), GS3 2630, Trimble AgGPS, SHP CAD, KMZ
      - importa de GS3, Gen4, Trimble, TASKDATA, SHP/KML já classificados
    Usa o núcleo do Conversor de Linhas (objeto CONV).
    ===================================================================== */
@@ -4766,7 +4765,7 @@ function cftFind(c,f,t,create){
   return T;
 }
 function cftColor(o){ const T=o&&cftFind(o.c,o.f,o.t,false); return T?T.color:'#9aa0a6'; }
-/* objetos classificados recebem a cor do talhão (cor real do objeto, como no AgroCAD) */
+/* objetos classificados recebem a cor do talhão (cor real do objeto, como num CAD) */
 function cftRecolor(c,f,t,oldC,newC){ let n=0; for(const e of ents){ if(e.cft && e.cft.c===c && e.cft.f===f && e.cft.t===t && (!e.color || e.color===oldC)){ e.color=newC; n++; } } S.dirty=true; return n; }
 function cftEntColor(e){ return e.cft ? cftColor(e.cft) : '#6b6f75'; }
 function cftLineEnts(){ return ents.filter(e=>e.pts && e.pts.length>1 && (e.type==='line'||e.type==='pline'||e.type==='spline')); }
@@ -4779,9 +4778,9 @@ function cftOpenDialog(){
   const box=document.getElementById('modalbox'); box.style.width='420px';
   const last=cftSession||cftOpenDialog.last||{};
   modalHTML(`
-    <h3>Classificação para Exportação</h3>
+    <h3>Classificar linhas — Cliente · Fazenda · Talhão</h3>
     ${['c','f','t'].map(k=>`
-      <label>${k==='c'?'Cliente':k==='f'?'Fazenda':'Talhão / Bloco'}</label>
+      <label>${k==='c'?'Cliente':k==='f'?'Fazenda':'Talhão'}</label>
       <div style="display:flex;gap:6px"><select id="cft_${k}" style="flex:1"></select>${k==='t'?'<input type="color" id="cft_col" title="Cor do talhão" style="width:34px;padding:0;height:28px">':''}<button class="cancel" id="cft_${k}_rm" style="flex:0 0 74px">Remover</button></div>
       <div style="display:flex;gap:6px;margin-top:4px"><input id="cft_${k}_new" placeholder="Novo..." style="flex:1"><button class="ok" id="cft_${k}_add" style="flex:0 0 74px">Adicionar</button></div>`).join('')}
     <label style="display:flex;gap:6px;align-items:center;margin-top:12px"><input type="checkbox" id="cft_keep" style="width:auto" ${last.keep?'checked':''}> Manter objetos já classificados (não reclassificar)</label>
@@ -4830,7 +4829,7 @@ function cftOpenDialog(){
     if(selection.size){ cftApplyTo([...selection],o); return; }
     cftSession=o; cftShowBar();
     setPrompt('Selecione os objetos para '+cftLabel(o)+':');
-    log('> CFT · selecione os objetos para '+cftLabel(o)+' (Enter/botão direito conclui, Esc cancela)','p');
+    log('> Classificar · selecione os objetos para '+cftLabel(o)+' (Enter/botão direito conclui, Esc cancela)','p');
   };
   fill();
 }
@@ -4840,13 +4839,13 @@ function cftApplyTo(ids,o){
     if(o.keep && e.cft && cftKey(e.cft)!==cftKey(o)){ kept++; continue; }
     e.cft={c:o.c,f:o.f,t:o.t}; e.color=cftColor(o); n++; }
   selection.clear(); updateProps();
-  log(`CFT: ${n} objeto(s) → ${cftLabel(o)}`+(kept?` · ${kept} mantido(s) com a classificação anterior`:''),'g');
+  log(`Classificação: ${n} objeto(s) → ${cftLabel(o)}`+(kept?` · ${kept} mantido(s) com a classificação anterior`:''),'g');
   cftRefresh();
 }
 function cftApplySession(){
   if(!cftSession) return false;
   if(selection.size) cftApplyTo([...selection],cftSession);
-  else log('CFT: nenhum objeto selecionado.','e');
+  else log('Classificação: nenhum objeto selecionado.','e');
   cftEndSession(); return true;
 }
 function cftEndSession(){ cftSession=null; const b=document.getElementById('cftBar'); if(b) b.style.display='none'; setPrompt('Comando:'); S.dirty=true; }
@@ -4856,17 +4855,17 @@ function cftShowBar(){
   b.style.display='flex';
 }
 
-/* ------------------------- outras ações CFT ------------------------- */
+/* ------------------------- outras ações de classificação ------------------------- */
 function cftDisassociate(){
-  const ids=[...selection]; if(!ids.length){ log('CFTD: selecione os objetos antes.','e'); return; }
+  const ids=[...selection]; if(!ids.length){ log('Desassociar: selecione os objetos antes.','e'); return; }
   pushState(); let n=0; ids.forEach(id=>{ const e=ents.find(x=>x.id===id); if(e&&e.cft){ if(e.color && e.color===cftColor(e.cft)) delete e.color; delete e.cft; n++; } });
-  log(`CFT removido de ${n} objeto(s).`,'g'); selection.clear(); updateProps(); cftRefresh();
+  log(`Classificação removida de ${n} objeto(s).`,'g'); selection.clear(); updateProps(); cftRefresh();
 }
 let cftCopyTargets=null;
 function cftStartCopy(){
-  if(!selection.size){ log('CFTC: selecione primeiro os objetos que vão RECEBER a classificação.','e'); return; }
+  if(!selection.size){ log('Copiar classificação: selecione primeiro os objetos que vão RECEBER a classificação.','e'); return; }
   cftCopyTargets=[...selection]; tool.reset(); tool.name='cft_copy';
-  setPrompt('CFTC · Clique no objeto de ORIGEM (já classificado):'); log('> Copiar CFT de outro objeto','p');
+  setPrompt('Copiar classificação · Clique no objeto de ORIGEM (já classificado):'); log('> Copiar classificação de outro objeto','p');
 }
 function cftOnPick(p){
   if(tool.name!=='cft_copy') return false;
@@ -4883,12 +4882,12 @@ function cftToggleView(force){
 /* classificação automática: objetos dentro de um contorno fechado (polígono) já classificado */
 function cftAutoByBoundary(){
   const bounds=ents.filter(e=>e.closed&&e.cft&&e.pts&&e.pts.length>2);
-  if(!bounds.length){ log('CFT automático: classifique antes os CONTORNOS (polígonos fechados) de cada talhão.','e'); return; }
+  if(!bounds.length){ log('Classificar pelo contorno: classifique antes os CONTORNOS (polígonos fechados) de cada talhão.','e'); return; }
   pushState(); let n=0;
   for(const e of cftLineEnts()){ if(e.closed||e.cft) continue;
     const pts=cftEntPts(e), mid=pts[Math.floor(pts.length/2)];
     const b=bounds.find(B=>pointInPoly(mid,B.pts)); if(b){ e.cft={...b.cft}; e.color=cftColor(b.cft); n++; } }
-  log(`CFT automático: ${n} linha(s) classificada(s) pelo contorno do talhão.`,'g'); cftRefresh();
+  log(`Classificar pelo contorno: ${n} linha(s) classificada(s) pelo contorno do talhão.`,'g'); cftRefresh();
 }
 
 /* --------------------------- legenda --------------------------- */
@@ -4906,7 +4905,7 @@ function cftRefresh(){
   const L=document.getElementById('cftLegend'); if(!L) return;
   if(!cftLegendOn){ L.style.display='none'; return; }
   const st=cftStats(), kb=v=>(v*16/1024+2).toFixed(2);
-  let h='<div class="cl-h">DIVISÃO PARA EXPORTAÇÃO <span id="cl-x">×</span></div><table><tr><th>COR</th><th>CFT</th><th>CURVAS</th><th>VÉRTICES</th><th>KB</th></tr>';
+  let h='<div class="cl-h">RESUMO DA CLASSIFICAÇÃO <span id="cl-x">×</span></div><table><tr><th>COR</th><th>CLIENTE · FAZENDA · TALHÃO</th><th>LINHAS</th><th>VÉRTICES</th><th>KB</th></tr>';
   let tn=0,tv=0;
   st.rows.forEach(r=>{ tn+=r.n; tv+=r.v;
     h+=`<tr data-k="${cftEsc(cftKey(r.o))}"><td title="${cftEsc(colorLabel(cftColor(r.o)))}"><input type="color" value="${cftColor(r.o)}" data-c="${cftEsc(cftKey(r.o))}"><div style="font-size:8.5px;color:var(--ink-dim);font-family:var(--font)">${cftEsc(colorLabel(cftColor(r.o)).replace(/^(\d+) · .*/,"$1").replace("Cor ","").replace(/^RGB.*/,"RGB"))}</div></td><td class="cl-n">${cftEsc(r.o.c)}<br>${cftEsc(r.o.f)}<br><b>${cftEsc(r.o.t)}</b></td><td>${r.n}</td><td>${r.v}</td><td>${kb(r.v)}</td></tr>`; });
@@ -4934,10 +4933,10 @@ function cftModelLines(filterKeys){
 }
 
 /* ------------------------------ EXPORTAR ------------------------------ */
-const CFT_OUTS=[['gen4','John Deere Gen4 (GS4/GS5)'],['gs3','John Deere GS3 2630'],['trimble','Trimble AgGPS (Precision-IQ)'],['shp','Shapefile AgroCAD (CLIENTE#FAZENDA#TALHAO)'],['kmz','KMZ (Google Earth)']];
+const CFT_OUTS=[['gen4','John Deere Gen4 (GS4/GS5)'],['gs3','John Deere GS3 2630'],['trimble','Trimble AgGPS (Precision-IQ)'],['shp','Shapefile por talhão (CLIENTE#FAZENDA#TALHAO)'],['kmz','KMZ (Google Earth)']];
 function cftExportDialog(){
   const st=cftStats();
-  if(!st.rows.length){ log('Nada classificado. Use "Classificar (CFT)" antes de exportar.','e'); return; }
+  if(!st.rows.length){ log('Nada classificado. Use "Classificar" antes de exportar.','e'); return; }
   const box=document.getElementById('modalbox'); box.style.width='640px';
   let tree=''; const byC=new Map();
   st.rows.forEach(r=>{ if(!byC.has(r.o.c)) byC.set(r.o.c,[]); byC.get(r.o.c).push(r); });
@@ -5012,7 +5011,7 @@ function cftImportDialog(){
   const box=document.getElementById('modalbox'); box.style.width='420px';
   modalHTML(`
     <h3>Importar linhas de monitor / projeto</h3>
-    <div style="font-size:11px;color:var(--ink-dim);line-height:1.5">GS3 2630, Gen4 (GS4/GS5), Trimble AgGPS, TASKDATA, ou SHP/KML do AgroCAD.
+    <div style="font-size:11px;color:var(--ink-dim);line-height:1.5">GS3 2630, Gen4 (GS4/GS5), Trimble AgGPS, TASKDATA, ou SHP/KML de outros programas.
       Cliente, fazenda e talhão vêm junto e as linhas já entram <b>classificadas</b>.</div>
     <label>Origem</label>
     <select id="im_fmt"><option value="auto">Detectar automaticamente</option>${Object.entries(CONV.FORMATS).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}</select>
@@ -5057,7 +5056,7 @@ function cftAddLines(lines,src){
     for(const p of l.parts){ const pts=p.map(q=>fromLatLon(q[1],q[0]));
       ents.push({id:newId(),type:'pline',pts,layer,color:cftColor({c:l.client,f:l.farm,t:l.field}),cft:{c:l.client,f:l.farm,t:l.field}}); n++; } }
   renderLayers(); zoomExtents(); S.cftView=true; cftLegendOn=true; cftRefresh();
-  log(`${src}: ${n} linha(s) importada(s) já classificadas (CFT).`,'g');
+  log(`${src}: ${n} linha(s) importada(s) já classificadas.`,'g');
   return n;
 }
 
@@ -5066,14 +5065,14 @@ window.addEventListener('keydown',ev=>{
   if(!cftSession && tool.name!=='cft_copy') return;
   const cmd=document.getElementById('cmd');
   if(ev.key==='Enter' && cftSession && (!cmd || !cmd.value.trim())){ ev.preventDefault(); ev.stopPropagation(); cftApplySession(); }
-  else if(ev.key==='Escape'){ if(cftSession){ cftEndSession(); log('CFT cancelado.','e'); } cftCopyTargets=null; }
+  else if(ev.key==='Escape'){ if(cftSession){ cftEndSession(); log('Classificação cancelada.','e'); } cftCopyTargets=null; }
 },true);
 (function cftInitUI(){
   const bar=document.createElement('div'); bar.id='cftBar';
   bar.innerHTML='<span class="lbl"></span><button id="cftBarOk">✓ Aplicar à seleção (Enter)</button><button id="cftBarX">Sair (Esc)</button>';
   document.getElementById('stage').appendChild(bar);
   document.getElementById('cftBarOk').onclick=cftApplySession;
-  document.getElementById('cftBarX').onclick=()=>{ cftEndSession(); log('CFT cancelado.','e'); };
+  document.getElementById('cftBarX').onclick=()=>{ cftEndSession(); log('Classificação cancelada.','e'); };
   const leg=document.createElement('div'); leg.id='cftLegend'; document.getElementById('stage').appendChild(leg);
 })();
 
@@ -5186,15 +5185,15 @@ const QS_PROPS=[
   {k:'layer',  n:'Camada (layer)',        t:'d'},
   {k:'color',  n:'Cor',                   t:'d'},
   {k:'ecolor', n:'Cor exibida (efetiva)', t:'d'},
-  {k:'ccft',   n:'Cor do talhão (CFT)',   t:'d'},
+  {k:'ccft',   n:'Cor do talhão',   t:'d'},
   {k:'type',   n:'Tipo de objeto',        t:'d'},
   {k:'len',    n:'Comprimento (m)',       t:'n', dp:2},
   {k:'area',   n:'Área (ha)',             t:'n', dp:4},
   {k:'verts',  n:'Nº de vértices',        t:'n', dp:0},
   {k:'closed', n:'Fechado',               t:'d'},
-  {k:'cftc',   n:'Cliente (CFT)',         t:'d'},
-  {k:'cftf',   n:'Fazenda (CFT)',         t:'d'},
-  {k:'cftt',   n:'Talhão (CFT)',          t:'d'},
+  {k:'cftc',   n:'Cliente',         t:'d'},
+  {k:'cftf',   n:'Fazenda',         t:'d'},
+  {k:'cftt',   n:'Talhão',          t:'d'},
   {k:'cftk',   n:'Classificação completa',t:'d'},
   {k:'cfts',   n:'Classificado?',         t:'d'},
 ];
@@ -5428,14 +5427,14 @@ const OS_DEF = {
   int :{n:'Interseção',           en:'Intersection',       rank:0},
   app :{n:'Interseção aparente',  en:'Apparent Intersect', rank:0},
   ext :{n:'Extensão',             en:'Extension',          rank:1},
-  cen :{n:'Centro',               en:'Center',             off:'Sem círculos/arcos no CAD Web'},
+  cen :{n:'Centro',               en:'Center',             off:'Sem círculos/arcos no Linhas Pro'},
   gcen:{n:'Centro geométrico',    en:'Geometric Center',   rank:0},
-  qua :{n:'Quadrante',            en:'Quadrant',           off:'Sem círculos/arcos no CAD Web'},
-  tan :{n:'Tangente',             en:'Tangent',            off:'Sem círculos/arcos no CAD Web'},
+  qua :{n:'Quadrante',            en:'Quadrant',           off:'Sem círculos/arcos no Linhas Pro'},
+  tan :{n:'Tangente',             en:'Tangent',            off:'Sem círculos/arcos no Linhas Pro'},
   per :{n:'Perpendicular',        en:'Perpendicular',      rank:1},
   par :{n:'Paralelo',             en:'Parallel',           rank:1},
   node:{n:'Nó',                   en:'Node',               rank:0},
-  ins :{n:'Inserção',             en:'Insert',             off:'Sem blocos no CAD Web'},
+  ins :{n:'Inserção',             en:'Insert',             off:'Sem blocos no Linhas Pro'},
   nea :{n:'Mais próximo',         en:'Nearest',            rank:2},
 };
 const OS_RUN_KEYS=['end','mid','int','app','ext','gcen','per','par','node','nea'];
@@ -5728,7 +5727,7 @@ function osSettings(){
 
 </script>
 <script>
-/* ===================== BREAK / BREAKATPOINT / TRIM / MBR (estilo AutoCAD + AgroCAD) ===================== */
+/* ===================== BREAK / BREAKATPOINT / TRIM / QL ===================== */
 /* utilidades de polilinha parametrizada pelo comprimento */
 function _edPts(e){ return (e.closed && e.pts.length>2) ? e.pts.concat([e.pts[0]]) : e.pts; }
 function _edCum(P){ const c=[0]; for(let i=1;i<P.length;i++) c.push(c[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1])); return c; }
@@ -5756,7 +5755,7 @@ function _edCuts(target, edges){
   const u=[]; for(const s of out){ if(target.closed ? true : (s>1e-6 && s<L-1e-6)) if(!u.length || s-u[u.length-1]>1e-6) u.push(s); }
   return {cuts:u,P,C,L};
 }
-/* cria pedaços herdando camada, cor e classificação CFT */
+/* cria pedaços herdando camada, cor e classificação */
 function _edPiece(src,pts){ const e={id:newId(),type:src.type==='line'&&pts.length>2?'pline':src.type,pts,layer:src.layer}; if(src.color) e.color=src.color; if(src.cft) e.cft={...src.cft}; return e; }
 function _edReplace(target,pieces){
   const i=ents.indexOf(target); if(i<0) return;
@@ -5772,7 +5771,7 @@ function _edRemoveSpan(e,P,C,L,s0,s1){
   const a=_edSlice(P,C,s1,L), b=_edSlice(P,C,0,s0); return [a.concat(b.slice(1))];
 }
 let edState=null;
-const _ED_TOOLS=['break2','brp','trim2','mbr'];
+const _ED_TOOLS=['break2','brp','trim2','ql'];
 
 /* ---------- BREAK (BR): objeto → 2º ponto  (ou P = escolher 1º ponto) ---------- */
 function edStartBreak(){
@@ -5865,28 +5864,28 @@ function _edFenceTrim(a,b){
   else log(`Cerca: ${n} objeto(s) aparado(s).`,'g');
 }
 
-/* ---------- MBR: quebra múltipla pelos layers (AgroCAD) ---------- */
-function edStartMBR(){
-  tool.reset(); tool.name='mbr'; edState={step:'cut', cutL:new Set(), tgtL:new Set()};
-  setPrompt('MBR · Selecione amostras dos layers CORTANTES (Enter confirma, L = lista):'); log('> MBR — quebra múltipla por layer','p');
+/* ---------- QL: quebra múltipla pelos layers ---------- */
+function edStartQL(){
+  tool.reset(); tool.name='ql'; edState={step:'cut', cutL:new Set(), tgtL:new Set()};
+  setPrompt('QL · Selecione amostras dos layers CORTANTES (Enter confirma, L = lista):'); log('> QL — quebra por layer','p');
 }
-function _edMBRPick(p){
+function _edQLPick(p){
   const hit=pick(p); if(!hit){ log('Nenhum objeto aqui.','e'); return; }
   const set = edState.step==='cut' ? edState.cutL : edState.tgtL;
   set.add(hit.layer); selection.add(hit.id); S.dirty=true;
   log(`${edState.step==='cut'?'Cortante':'A cortar'}: ${[...set].map(id=>LB(id).name).join(', ')}`,'p');
 }
-function _edMBRNext(){
+function _edQLNext(){
   const s=edState;
   if(s.step==='cut'){ if(!s.cutL.size){ log('Escolha ao menos um layer cortante.','e'); return; }
-    s.step='tgt'; selection.clear(); setPrompt('MBR · Selecione amostras dos layers que SERÃO CORTADOS (Enter executa, L = lista):'); return; }
+    s.step='tgt'; selection.clear(); setPrompt('QL · Selecione amostras dos layers que SERÃO CORTADOS (Enter executa, L = lista):'); return; }
   if(!s.tgtL.size){ log('Escolha ao menos um layer a ser cortado.','e'); return; }
-  edMBRRun([...s.cutL],[...s.tgtL]);
+  edQLRun([...s.cutL],[...s.tgtL]);
 }
-function edMBRRun(cutLayers,tgtLayers){
+function edQLRun(cutLayers,tgtLayers){
   const cutters=ents.filter(e=>_edVisible(e) && cutLayers.includes(e.layer));
   const targets=ents.filter(e=>_edVisible(e) && tgtLayers.includes(e.layer));
-  if(!cutters.length||!targets.length){ log('MBR: nada para processar.','e'); tool.reset(); edState=null; return; }
+  if(!cutters.length||!targets.length){ log('QL: nada para processar.','e'); tool.reset(); edState=null; return; }
   pushState(); let objs=0, parts=0;
   const t0=performance.now();
   for(const t of targets){
@@ -5898,26 +5897,26 @@ function edMBRRun(cutLayers,tgtLayers){
     const nw=_edReplace(t,pieces); objs++; parts+=nw.length;
   }
   selection.clear(); renderLayers(); updateProps(); S.dirty=true; tool.reset(); edState=null;
-  if(!objs){ undoStack.pop(); log('MBR: nenhum cruzamento entre os layers escolhidos.','e'); return; }
-  log(`MBR: ${objs} objeto(s) quebrado(s) em ${parts} parte(s) · cortantes: ${cutLayers.map(id=>LB(id).name).join(', ')} · ${(performance.now()-t0).toFixed(0)} ms`,'g');
+  if(!objs){ undoStack.pop(); log('QL: nenhum cruzamento entre os layers escolhidos.','e'); return; }
+  log(`QL: ${objs} objeto(s) quebrado(s) em ${parts} parte(s) · cortantes: ${cutLayers.map(id=>LB(id).name).join(', ')} · ${(performance.now()-t0).toFixed(0)} ms`,'g');
 }
-function edMBRDialog(){
+function edQLDialog(){
   const s=edState||{cutL:new Set(),tgtL:new Set()};
   const lc={}; ents.forEach(e=>{ if(_edVisible(e)) lc[e.layer]=(lc[e.layer]||0)+1; });
   const col=(k,set)=>layers.filter(l=>lc[l.id]).map(l=>`<label class="ex-o"><input type="checkbox" data-k="${k}" value="${l.id}"${set.has(l.id)?' checked':''}><i style="width:11px;height:11px;border-radius:2px;display:inline-block;background:${l.color}"></i>${l.name} <small style="color:var(--ink-dim)">(${lc[l.id]})</small></label>`).join('');
   const box=document.getElementById('modalbox');
-  box.innerHTML=`<h3>MBR — Quebra múltipla por layer</h3>
+  box.innerHTML=`<h3>QL — Quebra por layer</h3>
    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
     <div><label>Layers CORTANTES</label><div class="ex-tree">${col('c',s.cutL)}</div></div>
     <div><label>Layers que SERÃO CORTADOS</label><div class="ex-tree">${col('t',s.tgtL)}</div></div></div>
-   <div style="font-size:10.5px;color:var(--ink-dim);margin-top:8px">Cada objeto dos layers a cortar é quebrado em todos os cruzamentos com os layers cortantes. Nada é apagado; a classificação CFT é mantida nos pedaços.</div>
+   <div style="font-size:10.5px;color:var(--ink-dim);margin-top:8px">Cada objeto dos layers a cortar é quebrado em todos os cruzamentos com os layers cortantes. Nada é apagado; a classificação é mantida nos pedaços.</div>
    <div class="row"><button class="cancel" id="mbrC">Cancelar</button><button class="ok" id="mbrOk">Quebrar</button></div>`;
   box.style.width='520px'; document.getElementById('modal').style.display='flex';
   document.getElementById('mbrC').onclick=()=>{ closeModal(); box.style.width=''; };
   document.getElementById('mbrOk').onclick=()=>{
     const c=[...box.querySelectorAll('input[data-k=c]:checked')].map(i=>+i.value), t=[...box.querySelectorAll('input[data-k=t]:checked')].map(i=>+i.value);
-    if(!c.length||!t.length){ log('MBR: marque ao menos um layer em cada lista.','e'); return; }
-    closeModal(); box.style.width=''; edMBRRun(c,t);
+    if(!c.length||!t.length){ log('QL: marque ao menos um layer em cada lista.','e'); return; }
+    closeModal(); box.style.width=''; edQLRun(c,t);
   };
 }
 
@@ -5942,7 +5941,7 @@ function edOnPick(p){
     if(s.fence){ const a=s.fence; s.fence=null; _edFenceTrim(a,p); _edTrimPrompt(); return true; }
     _edTrimClick(p); return true;
   }
-  if(tool.name==='mbr'){ _edMBRPick(p); return true; }
+  if(tool.name==='ql'){ _edQLPick(p); return true; }
   return false;
 }
 function edEnter(raw){   // retorna true se consumiu
@@ -5964,9 +5963,9 @@ function edEnter(raw){   // retorna true se consumiu
     if(k===''){ if(s.fence){ s.fence=null; _edTrimPrompt(); return true; } tool.reset(); edState=null; selection.clear(); updateProps(); log('TRIM concluído.','g'); return true; }
     return true;
   }
-  if(tool.name==='mbr'){
-    if(k==='L'){ edMBRDialog(); return true; }
-    if(k===''){ _edMBRNext(); return true; }
+  if(tool.name==='ql'){
+    if(k==='L'){ edQLDialog(); return true; }
+    if(k===''){ _edQLNext(); return true; }
     return true;
   }
   return false;
@@ -6076,7 +6075,7 @@ function aciPropRefresh(selEnts){
 
 </script>
 <script>
-/* ===================== Importar SHP completo: .zip ou vários arquivos, .prj automático, LAYER / COLOR / CFT do .dbf ===================== */
+/* ===================== Importar SHP completo: .zip ou vários arquivos, .prj automático, LAYER / COLOR / classificação do .dbf ===================== */
 function importSHP(){
   const fi=document.getElementById('fileinput');
   fi.accept='.shp,.dbf,.prj,.cpg,.shx,.zip'; fi.multiple=true;
@@ -6133,7 +6132,7 @@ async function shpImportFiles(files){
       }
     }
     renderLayers(); zoomExtents(); S.dirty=true; if(cfts && typeof cftRefresh==='function'){ cftRefresh(); }
-    log(`SHP: ${n} feição(ões) em ${lays.size} camada(s) [${[...lays].slice(0,4).join(', ')}${lays.size>4?'…':''}]`+(colored?` · ${colored} com cor do .dbf`:'')+(cfts?` · ${cfts} já classificadas (CFT)`:''),'g');
+    log(`SHP: ${n} feição(ões) em ${lays.size} camada(s) [${[...lays].slice(0,4).join(', ')}${lays.size>4?'…':''}]`+(colored?` · ${colored} com cor do .dbf`:'')+(cfts?` · ${cfts} já classificadas`:''),'g');
   };
   if(needAsk){
     let guess='utm'; try{ const s=CONV.readShp(list[0].shp).recs.find(r=>r.parts); const q=s.parts[0][0]; if(Math.abs(q[0])<=180&&Math.abs(q[1])<=90) guess='geo'; }catch(_){}
@@ -6143,7 +6142,7 @@ async function shpImportFiles(files){
 
 </script>
 <script>
-/* ===================== REDUZIR PONTOS SEM PERDA DE QUALIDADE (Douglas-Peucker)  +  HME mín/máx ===================== */
+/* ===================== REDUZIR PONTOS SEM PERDA DE QUALIDADE (Douglas-Peucker)  +  espaçamento mín/máx ===================== */
 /* mantém só vértices do original; nenhum ponto da linha original fica mais longe que "desvio" da nova linha */
 function dpSimplify(P, tol){
   const n=P.length; if(n<3) return P.slice();
@@ -6165,7 +6164,7 @@ function dpSimplifyEnt(e,tol){
   if(e.closed && e.pts.length>3){ const r=dpSimplify(e.pts.concat([e.pts[0]]),tol); r.pop(); return r.length>=3?r:e.pts.slice(); }
   return dpSimplify(e.pts,tol);
 }
-/* HME (AgroCAD): tira vértices mais próximos que o mínimo e divide por igual os trechos maiores que o máximo */
+/* Espaçar vértices: tira vértices mais próximos que o mínimo e divide por igual os trechos maiores que o máximo */
 function hmeMinMax(P, mn, mx, closed){
   let Q=closed?P.concat([P[0]]):P;
   if(mn>0 && Q.length>2){ const R=[Q[0]]; for(let i=1;i<Q.length-1;i++){ const p=Q[i], l=R[R.length-1]; if(Math.hypot(p[0]-l[0],p[1]-l[1])>=mn) R.push(p); } R.push(Q[Q.length-1]); Q=R; }
@@ -6180,7 +6179,7 @@ function _spDev(orig,simp){ // desvio máximo real (amostra) original -> nova
   for(const p of orig){ let best=Infinity; for(let s=Math.max(0,j-3); s<simp.length-1; s++){ const r=distSeg(p,simp[s],simp[s+1]); if(r.d<best){ best=r.d; j=s; } if(r.d<1e-9) break; if(s>j+40) break; } if(best>m) m=best; }
   return m;
 }
-const SP={mode:'rpq', scope:'sel', layer:'*', tol:0.02, mn:1.5, mx:8};
+const SP={mode:'red', scope:'sel', layer:'*', tol:0.02, mn:1.5, mx:8};
 try{ const v=JSON.parse(localStorage.getItem('cad_simp')||'null'); if(v){ SP.tol=v.tol??SP.tol; SP.mn=v.mn??SP.mn; SP.mx=v.mx??SP.mx; } }catch(_){}
 let _spSel=null, _spT=null, _spPrev=null;   // _spPrev: Map ent -> pts resultado (prévia no desenho)
 function _spTargets(){
@@ -6197,17 +6196,17 @@ function spOpen(mode){
   SP.scope='sel';
   let d=document.getElementById('spDlg'); if(d) d.remove();
   d=document.createElement('div'); d.id='spDlg'; d.className='sp-dlg';
-  const isR=mode==='rpq';
+  const isR=mode==='red';
   const lc={}; ents.forEach(e=>{ if(e.pts&&e.pts.length>1) lc[e.layer]=(lc[e.layer]||0)+1; });
   d.innerHTML=`<div class="qh"><svg viewBox="0 0 24 24" width="16" height="16">${isR?'<path d="M3 18L21 6"/><circle cx="3" cy="18" r="1.6" class="f"/><circle cx="12" cy="12" r="1.6" class="f"/><circle cx="21" cy="6" r="1.6" class="f"/>':'<path d="M3 18L21 6"/><circle cx="3" cy="18" r="1.3" class="f"/><circle cx="7.5" cy="15" r="1.3" class="f"/><circle cx="12" cy="12" r="1.3" class="f"/><circle cx="16.5" cy="9" r="1.3" class="f"/><circle cx="21" cy="6" r="1.3" class="f"/>'}</svg>
-     <span>${isR?'Reduzir pontos sem perda de qualidade':'HME · Padronizar espaçamento de vértices'}</span><i id="spX">✕</i></div>
+     <span>${isR?'Reduzir vértices (desvio máximo)':'Espaçar vértices (mínimo / máximo)'}</span><i id="spX">✕</i></div>
    <div class="qb">
      <div class="qr"><label>Objetos:</label><select id="spScope">
         <option value="sel" id="spSelOpt">Linhas selecionadas (${selection.size})</option>
         <option value="layer">Uma camada…</option><option value="all">Todas as linhas visíveis</option></select></div>
  <div class="sp-pick" id="spPick">👆 Clique nas linhas ou arraste uma janela no desenho para escolher (Shift — ou o botão “Janela” no celular — soma/tira). <a id="spClr">limpar</a> · <a id="spAllV">todas visíveis</a></div>
      <div class="qr" id="spLayRow" style="display:none"><label>Camada:</label><select id="spLayer">${layers.filter(l=>lc[l.id]).map(l=>`<option value="${l.id}">${l.name} (${lc[l.id]})</option>`).join('')}</select></div>
-     ${isR?`<div class="qr"><label>Maior desvio aceitável (m):</label><input type="number" id="spTol" step="0.005" min="0.001" value="${SP.tol}"></div>
+     ${isR?`<div class="qr"><label>Desvio máximo permitido (m):</label><input type="number" id="spTol" step="0.005" min="0.001" value="${SP.tol}"></div>
        <div class="sp-hint">Mantém só vértices da linha original — nenhum ponto da linha original fica mais longe que esse valor da linha nova. 0,02 m = 2 cm.</div>`
      :`<div class="qr"><label>Espaçamento mínimo (m):</label><input type="number" id="spMn" step="0.5" min="0" value="${SP.mn}"></div>
        <div class="qr"><label>Espaçamento máximo (m):</label><input type="number" id="spMx" step="0.5" min="0.1" value="${SP.mx}"></div>
@@ -6231,23 +6230,23 @@ function spOpen(mode){
   d.addEventListener('keydown',ev=>{ ev.stopPropagation(); if(ev.key==='Enter'){ ev.preventDefault(); spApply(); close(); } if(ev.key==='Escape') close(); });
   sync();
   if(typeof mbCanFocus!=='function' || mbCanFocus()) setTimeout(()=>{ const f=$(isR?'spTol':'spMn'); f.focus(); f.select(); },30);
-  log(isR?'> Reduzir pontos sem perda de qualidade (Douglas-Peucker)':'> HME · espaçamento mínimo / máximo','p');
+  log(isR?'> Reduzir vértices (Douglas-Peucker)':'> Espaçar vértices (mínimo / máximo)','p');
 }
-function _spRun(e){ return SP.mode==='rpq' ? dpSimplifyEnt(e,SP.tol) : hmeMinMax(e.pts,SP.mn,SP.mx,!!e.closed); }
+function _spRun(e){ return SP.mode==='red' ? dpSimplifyEnt(e,SP.tol) : hmeMinMax(e.pts,SP.mn,SP.mx,!!e.closed); }
 function spPreview(){
   const el=document.getElementById('spRes'); if(!el) return;
   const o=document.getElementById('spSelOpt'); if(o) o.textContent=`Linhas selecionadas (${selection.size})`;
   _spPrev=null; S.dirty=true;
   const T=_spTargets(); if(!T.length){ el.textContent= SP.scope==='sel' ? 'Nenhuma linha selecionada ainda — clique ou arraste no desenho.' : 'Nenhuma linha no escopo escolhido.'; return; }
-  if(SP.mode==='rpq' && !(SP.tol>0)){ el.textContent='Informe um desvio maior que zero.'; return; }
-  if(SP.mode==='hme' && !(SP.mx>0)){ el.textContent='Informe o espaçamento máximo.'; return; }
+  if(SP.mode==='red' && !(SP.tol>0)){ el.textContent='Informe um desvio maior que zero.'; return; }
+  if(SP.mode==='esp' && !(SP.mx>0)){ el.textContent='Informe o espaçamento máximo.'; return; }
   let a=0,b=0,dev=0; const t0=performance.now();
   const pv=new Map();
-  for(const e of T){ const r=_spRun(e); a+=e.pts.length; b+=r.length; if(b<60000) pv.set(e,r); if(SP.mode==='rpq' && performance.now()-t0<300) dev=Math.max(dev,_spDev(e.pts,r)); }
+  for(const e of T){ const r=_spRun(e); a+=e.pts.length; b+=r.length; if(b<60000) pv.set(e,r); if(SP.mode==='red' && performance.now()-t0<300) dev=Math.max(dev,_spDev(e.pts,r)); }
   _spPrev = b<60000 ? pv : null;
   const pc=a?((b-a)/a*100):0, f=n=>n.toLocaleString('pt-BR');
   el.innerHTML=`${T.length} linha(s) · vértices <b>${f(a)}</b> → <b>${f(b)}</b> <span style="color:${pc<0?'#37d67a':'#ffd23f'}">(${pc>0?'+':''}${pc.toFixed(1)}%)</span>`+
-    (SP.mode==='rpq'?`<br><small>desvio máximo medido: ${dev.toFixed(3)} m · tamanho estimado ${(b*24/1024).toFixed(0)} KB (antes ${(a*24/1024).toFixed(0)} KB)</small>`:'');
+    (SP.mode==='red'?`<br><small>desvio máximo medido: ${dev.toFixed(3)} m · tamanho estimado ${(b*24/1024).toFixed(0)} KB (antes ${(a*24/1024).toFixed(0)} KB)</small>`:'');
 }
 function spApply(){
   const T=_spTargets(); if(!T.length){ log('Nada para processar.','e'); return; }
@@ -6257,8 +6256,8 @@ function spApply(){
   if(typeof _bbReset==='function') _bbReset();
   renderLayers(); updateProps(); S.dirty=true; if(typeof cftRefresh==='function') cftRefresh();
   const f=n=>n.toLocaleString('pt-BR');
-  log(SP.mode==='rpq' ? `Reduzir pontos: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (desvio ≤ ${SP.tol} m).`
-                      : `HME: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (mín ${SP.mn} m · máx ${SP.mx} m).`,'g');
+  log(SP.mode==='red' ? `Reduzir vértices: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (desvio ≤ ${SP.tol} m).`
+                      : `Espaçar vértices: ${T.length} linha(s), ${f(a)} → ${f(b)} vértices (mín ${SP.mn} m · máx ${SP.mx} m).`,'g');
 }
 
 /* prévia no desenho: vértices que vão ficar (verde) */
@@ -6324,7 +6323,7 @@ function mbToggleMode(){
   const cmd=()=>document.getElementById('cmd');
   const key=(k)=>{ const t=cmd(); const ev=new KeyboardEvent('keydown',{key:k,code:k==='Enter'?'Enter':k,bubbles:true,cancelable:true}); t.dispatchEvent(ev); };
   document.getElementById('mbOk').onclick=()=>{
-    // mesmo efeito do Enter na linha de comando (conclui polyline, TRIM, MBR, sessão CFT...)
+    // mesmo efeito do Enter na linha de comando (conclui polyline, TRIM, QL, classificação...)
     if(typeof cftSession!=='undefined' && cftSession){ cftApplySession(); return; }
     key('Enter'); S.dirty=true; };
   document.getElementById('mbEsc').onclick=()=>{ window.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true})); };
@@ -6428,7 +6427,7 @@ mbApplyMode();
 
 </script>
 <script>
-/* ===================== IMPORTAR DWG → converte para DXF (padrão do CAD Web) → importa =====================
+/* ===================== IMPORTAR DWG → converte para DXF (padrão do Linhas Pro) → importa =====================
    Leitura do DWG: LibreDWG (WebAssembly, GPL-3) carregada só quando você abre um DWG, direto do CDN jsDelivr.
    Depois da 1ª vez fica guardada no navegador (IndexedDB) e funciona offline. */
 const DWG_LIB={ ver:'0.8.2', base:'https://cdn.jsdelivr.net/npm/@mlightcad/libredwg-web@0.8.2/' };
@@ -6642,7 +6641,7 @@ async function importDWGFile(file){
       <b>${file.name}</b>${ver?' · '+ver:''}<br>
       ${stats.ents.toLocaleString('pt-BR')} objeto(s) convertido(s)${stats.ins?' · '+stats.ins+' bloco(s) explodido(s)':''}<br>
       <span style="color:var(--ink-dim)">${by}</span>
-      ${sk?`<br><span style="color:var(--yellow)">Não importados (o CAD Web não tem esses tipos): ${sk}</span>`:''}
+      ${sk?`<br><span style="color:var(--yellow)">Não importados (o Linhas Pro não tem esses tipos): ${sk}</span>`:''}
       <br><a href="${url}" download="${name}.dxf" style="color:var(--sel)">⬇ Baixar o DXF convertido</a>
     </div>
     <div class="row"><button class="cancel" id="dwgC">Cancelar</button><button class="ok" id="dwgOk">Importar no desenho</button></div>`;
@@ -6655,7 +6654,7 @@ async function importDWGFile(file){
 <script>
 /* ===================== MATCHPROP · repetir último comando (Enter) · preferências salvas ===================== */
 
-/* ---------- MATCHPROP (MA): copia camada / cor / classificação CFT de um objeto para outros ---------- */
+/* ---------- MATCHPROP (MA): copia camada / cor / classificação de um objeto para outros ---------- */
 const MA={ props:{layer:true,color:true,cft:true} };
 try{ const v=JSON.parse(localStorage.getItem('cad_matchprop')||'null'); if(v) Object.assign(MA.props,v); }catch(_){}
 let maState=null;
@@ -6666,11 +6665,11 @@ function maStart(){
   if(pre && pre.pts){ maSetSrc(pre); } else setPrompt('MATCHPROP · Selecione o objeto de ORIGEM:');
   log('> MATCHPROP (copiar propriedades)','p');
 }
-function maDesc(){ const k=[]; if(MA.props.layer) k.push('Camada'); if(MA.props.color) k.push('Cor'); if(MA.props.cft) k.push('Classificação CFT'); return k.join(', ')||'nenhuma'; }
+function maDesc(){ const k=[]; if(MA.props.layer) k.push('Camada'); if(MA.props.color) k.push('Cor'); if(MA.props.cft) k.push('Classificação'); return k.join(', ')||'nenhuma'; }
 function maSetSrc(e){
   maState.src=e; maState.step='dst';
   const L=LB(e.layer);
-  log(`Origem: camada ${L.name} · cor ${typeof colorLabel==='function'?colorLabel(e.color||null):(e.color||'ByLayer')}${e.cft?' · CFT '+e.cft.c+' | '+e.cft.f+' | '+e.cft.t:''}  —  copiando: ${maDesc()}`,'p');
+  log(`Origem: camada ${L.name} · cor ${typeof colorLabel==='function'?colorLabel(e.color||null):(e.color||'ByLayer')}${e.cft?' · classificação '+e.cft.c+' | '+e.cft.f+' | '+e.cft.t:''}  —  copiando: ${maDesc()}`,'p');
   setPrompt('MATCHPROP · Selecione os objetos de DESTINO (clique ou janela) · [C]onfigurações · Enter conclui:');
   S.dirty=true;
 }
@@ -6711,7 +6710,7 @@ function maSettings(){
   box.innerHTML=`<h3>Copiar propriedades — configurações</h3>
     <label class="ex-o"><input type="checkbox" id="maL" ${MA.props.layer?'checked':''}> Camada (layer)</label>
     <label class="ex-o"><input type="checkbox" id="maC" ${MA.props.color?'checked':''}> Cor</label>
-    <label class="ex-o"><input type="checkbox" id="maF" ${MA.props.cft?'checked':''}> Classificação CFT (Cliente · Fazenda · Talhão)</label>
+    <label class="ex-o"><input type="checkbox" id="maF" ${MA.props.cft?'checked':''}> Classificação (Cliente · Fazenda · Talhão)</label>
     <div class="row"><button class="cancel" id="maX">Cancelar</button><button class="ok" id="maOk">OK</button></div>`;
   document.getElementById('modal').style.display='flex';
   document.getElementById('maX').onclick=closeModal;
@@ -6742,7 +6741,7 @@ function maDraw(){
 
 /* ---------- Enter / Espaço com a linha de comando vazia = repete o último comando (como no AutoCAD) ---------- */
 let LAST_CMD=null;
-const _NO_REPEAT=new Set(['UNDO','REDO','SELALL','SELINV','BASEMAP','LAYERPANEL','CFG','RASTERS','ZOOMEXT','SAVE','CFTV']);
+const _NO_REPEAT=new Set(['UNDO','REDO','SELALL','SELINV','BASEMAP','LAYERPANEL','CFG','RASTERS','ZOOMEXT','SAVE','CLV']);
 (function(){
   const st=startTool;
   startTool=function(cmd){ if(cmd && !_NO_REPEAT.has(cmd)) LAST_CMD=cmd; return st.apply(this,arguments); };
@@ -6853,7 +6852,7 @@ function docRender(){
     el.ondblclick=()=>docRename(i);
   });
   bar.querySelector('.dt-add').onclick=()=>docNew();
-  document.title=(docActive()?docActive().name+' — ':'')+'CAD Web';
+  document.title=(docActive()?docActive().name+' — ':'')+'Linhas Pro';
 }
 function docMarkDirty(){ const d=docActive(); if(d && !d.dirty){ d.dirty=true; docRender(); } }
 
@@ -6878,13 +6877,13 @@ async function _docSaveNow(){
     const o=URL.createObjectURL; let named=false;
     // renomeia o download sem reescrever a função original
     const orig=HTMLAnchorElement.prototype.click;
-    HTMLAnchorElement.prototype.click=function(){ if(!named && this.download && /^projeto_agrocad_\d+\.json$/.test(this.download)){ named=true; this.download=(d?d.name:'projeto').replace(/[\\/:*?"<>|]+/g,'_')+'.json'; } return orig.apply(this,arguments); };
+    HTMLAnchorElement.prototype.click=function(){ if(!named && this.download && /^projeto_linhaspro_\d+\.json$/.test(this.download)){ named=true; this.download=(d?d.name:'projeto').replace(/[\\/:*?"<>|]+/g,'_')+'.json'; } return orig.apply(this,arguments); };
     try{ sv.apply(this,arguments); } finally{ HTMLAnchorElement.prototype.click=orig; }
     if(d){ d.dirty=false; docRender(); _docSave(); }
   };
   // abrir projeto: se o desenho atual já tem coisa, abre em uma aba nova (igual ao AutoCAD)
   const lj=loadJSON; loadJSON=function(f){
-    const d=docActive(), nm=(f&&f.name||'projeto').replace(/\.(json|agrocad)$/i,'');
+    const d=docActive(), nm=(f&&f.name||'projeto').replace(/\.(json)$/i,'');
     if(d && (ents.length || d.dirty)) docNew(nm,true); else if(d){ d.name=nm; }
     const r=lj.apply(this,arguments);
     setTimeout(()=>{ const a=docActive(); if(a){ a.dirty=false; docRender(); _docSave(); } },600);
